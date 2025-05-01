@@ -59,6 +59,13 @@ include "koneksi.php";
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -166,61 +173,41 @@ include "koneksi.php";
         <!-- Left side columns -->
         <div class="col-lg-16">
           <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Vertical Form</h5>
 
-            <!-- Welcome Card -->
-            <div class="col-12">
-              <div class="card info-card customers-card shadow-sm w-100">
-                <div class="card-body text-center py-4">
-                  <h4 class="mb-2">Selamat datang di Website Admin <strong>ToBag</strong></h4>
-                  <p class="text-muted small mb-0">Kelola produk, transaksi, dan pelanggan dengan mudah</p>
+              <!-- Vertical Form -->
+              <form class="row g-3">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">Your Name</label>
+                  <input type="text" class="form-control" id="inputNanme4">
                 </div>
-              </div>
-
-            </div><!-- End Customers Card -->
-
-            <!-- Sales Card -->
-            <div class="col-xxl-8 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Pesanan <span>| Semua waktu</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
-                    </div>
-                  </div>
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="inputEmail4">
                 </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-8 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Pendapatan <span>| Hari ini</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>Rp. 32.264,-</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
-                    </div>
-                  </div>
+                <div class="col-12">
+                  <label for="inputPassword4" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="inputPassword4">
                 </div>
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">Address</label>
+                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress" class="form-label">Keterangan</label>
+                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+                
+              </form><!-- Vertical Form -->
 
-              </div>
-            </div><!-- End Revenue Card -->
+            </div>
+          </div>
 
             
           </div>
