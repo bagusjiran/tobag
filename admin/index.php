@@ -97,28 +97,28 @@ include "koneksi.php";
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-house-door"></i>
           <span>Beranda</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="kategori.php">
-          <i class="bi bi-person"></i>
+          <i class="bi bi-tags"></i>
           <span>Kategori Prodack</span>
         </a>
       </li><!-- End kategori Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="produk.php">
-          <i class="bi bi-question-circle"></i>
+          <i class="bi bi-box"></i>
           <span>Produk</span>
         </a>
       </li><!-- End Produk Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="kranjang.php">
-          <i class="bi bi-envelope"></i>
+          <i class="bi bi-cart"></i>
           <span>Keranjang</span>
         </a>
       </li><!-- End Keranjang Page Nav -->

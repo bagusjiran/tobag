@@ -1,45 +1,41 @@
 <?php
 include "koneksi.php";
 
-// Fungsi untuk menghasilkan ID kategori secara otomatis
-function generateKategoriId($koneksi) {
-    $query = "SELECT MAX(id_kategori) AS max_id FROM tb_kategori";
-    $result = $koneksi->query($query);
-    $row = $result->fetch_assoc();
-    $maxId = $row['max_id'];
+// Ambil ID dari parameter URL
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-    // Jika belum ada data, mulai dari ID pertama
-    if ($maxId == null) {
-        return "KAT001";
+    // Query untuk mengambil data kategori berdasarkan ID
+    $sql = mysqli_query($koneksi, "SELECT * FROM tb_kategori WHERE id_kategori = '$id'");
+    $data = mysqli_fetch_array($sql);
+
+    // Jika data tidak ditemukan, tampilkan pesan error
+    if (!$data) {
+        echo "<script>alert('Data tidak ditemukan!'); window.location='kategori.php';</script>";
+        exit;
     }
-
-    // Ambil angka dari ID terakhir dan tambahkan 1
-    $number = (int)substr($maxId, 3) + 1;
-    return "KAT" . str_pad($number, 3, "0", STR_PAD_LEFT);
+} else {
+    // Jika ID tidak ada di URL, redirect ke halaman kategori
+    header("Location: kategori.php");
+    exit;
 }
 
+// Proses update data kategori
 if (isset($_POST['simpan'])) {
     $nm_kategori = $_POST['nm_kategori'];
 
     // Hindari SQL Injection dengan Prepared Statement
-    $stmt = $koneksi->prepare("INSERT INTO tb_kategori (id_kategori, nm_kategori) VALUES (?, ?)");
+    $stmt = $koneksi->prepare("UPDATE tb_kategori SET nm_kategori = ? WHERE id_kategori = ?");
     if (!$stmt) {
         die("Error preparing statement: " . $koneksi->error);
     }
 
-    // Generate ID Kategori secara otomatis
-    $id_kategori = generateKategoriId($koneksi);
-
-    $stmt->bind_param("ss", $id_kategori, $nm_kategori); // "ss" karena kedua parameter adalah string
+    $stmt->bind_param("ss", $nm_kategori, $id); // "ss" karena kedua parameter adalah string
 
     if ($stmt->execute()) {
-        // Redirect ke halaman kategori dengan parameter untuk menampilkan pesan sukses
-        header("Location: kategori.php?status=sukses");
-        exit; // Penting untuk menghentikan eksekusi setelah header
+        echo "<script>alert('Data berhasil diubah!'); window.location='kategori.php';</script>";
     } else {
-        // Redirect ke halaman kategori dengan parameter untuk menampilkan pesan error
-        header("Location: kategori.php?status=gagal");
-        exit; // Penting untuk menghentikan eksekusi setelah header
+        echo "<script>alert('Data gagal diubah!');</script>";
     }
 
     $stmt->close();
@@ -53,7 +49,7 @@ if (isset($_POST['simpan'])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Beranda -  Admin of ToBag</title>
+  <title>Edit Kategori - Admin of ToBag</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -201,34 +197,34 @@ if (isset($_POST['simpan'])) {
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Kategori Product</h1>
+      <h1>Edit Kategori</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-          <li class="breadcrumb-item">Kategori Produk</li>
-          <li class="breadcrumb-item active">Tambah</li>
+          <li class="breadcrumb-item"><a href="kategori.php">Kategori</a></li>
+          <li class="breadcrumb-item active">Edit</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section dashboard">
+    <section class="section">
       <div class="row">
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Tambah Kategori</h5>
+              <h5 class="card-title">Form Edit Kategori</h5>
 
-              <!-- Form Tambah Kategori -->
-              <form class="row g-3 mt-2" method="post">
-                <div class="col-12">
+              <!-- Form Edit Kategori -->
+              <form method="post">
+                <div class="mb-3">
                   <label for="nm_kategori" class="form-label">Nama Kategori</label>
-                  <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" placeholder="Masukkan Nama Kategori Produk" required>
+                  <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" value="<?php echo isset($data['nm_kategori']) ? $data['nm_kategori'] : ''; ?>" placeholder="Masukkan Nama Kategori" required>
                 </div>
                 <div class="text-center">
-                  <button type="reset" class="btn btn-secondary">Reset</button>
                   <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                  <a href="kategori.php" class="btn btn-secondary">Batal</a>
                 </div>
-              </form><!-- End Form Tambah Kategori -->
+              </form><!-- End Form Edit Kategori -->
 
             </div>
           </div>
