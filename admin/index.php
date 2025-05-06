@@ -1,8 +1,3 @@
-<?php
-include "koneksi.php";
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +5,7 @@ include "koneksi.php";
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Beranda -  Admin of ToBag</title>
+  <title>Beranda - Tobag Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -49,9 +44,9 @@ include "koneksi.php";
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Admin of ToBag</span>
+        <span class="d-none d-lg-block">Tobag</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -59,17 +54,18 @@ include "koneksi.php";
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
+
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile.png" alt="Profile" class="rounded-circle">
-          
+            <img src="assets/img/apple-touch-icon.png" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Admin of ToBag</h6>
-              <span>Admin</span>
+              <h6>Danta Ferdinan</h6>
+              <span>Web Designer</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -97,53 +93,55 @@ include "koneksi.php";
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-          <i class="bi bi-house-door"></i>
+        <i class="bi bi-house"></i>
           <span>Beranda</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="kategori.php">
-          <i class="bi bi-tags"></i>
-          <span>Kategori Prodack</span>
+        <i class="bi bi-box"></i>
+          <span>Kategori Produk</span>
         </a>
-      </li><!-- End kategori Page Nav -->
+      </li><!-- End Kategori Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="produk.php">
-          <i class="bi bi-box"></i>
+        <a class="nav-link collapsed" href="Produk.php">
+          <i class="bi bi-question-circle"></i>
           <span>Produk</span>
         </a>
-      </li><!-- End Produk Page Nav -->
+      </li><!-- End Produk Nav -->
+
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="kranjang.php">
-          <i class="bi bi-cart"></i>
+        <a class="nav-link collapsed" href="Keranjang.php">
+          <i class="bi bi-envelope"></i>
           <span>Keranjang</span>
         </a>
-      </li><!-- End Keranjang Page Nav -->
+      </li><!-- End Keranjang Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="transaksi.php">
           <i class="bi bi-card-list"></i>
           <span>Transaksi</span>
         </a>
-      </li><!-- End Transaksi Page Nav -->
+      </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="laporan.php">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Laporan</span>
         </a>
-      </li><!-- End Laporan Page Nav -->
+      </li><!-- End laporan Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
+        <a class="nav-link collapsed" href="pengguna.php">
           <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
+          <span>Pengguna</span>
         </a>
-      </li><!-- End Error 404 Page Nav -->
+      </li><!-- End pengguna Nav -->
 
+      
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -222,24 +220,26 @@ include "koneksi.php";
               </div>
             </div><!-- End Revenue Card -->
 
-            
+
+           
           </div>
         </div><!-- End Left side columns -->
       </div>
     </section>
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>Tobag</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
       <!-- You can delete the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://wa.me/6282322238082" target="_blank">Smart People</a>
+      Designed by <a href="https://wa.me/6282322238082">Smart People</a>
     </div>
   </footer><!-- End Footer -->
 
