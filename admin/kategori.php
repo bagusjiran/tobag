@@ -48,7 +48,7 @@ include "koneksi.php";
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Tobag</span>
       </a>
@@ -124,21 +124,21 @@ include "koneksi.php";
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="produk.php">
-          <i class="bi bi-archive"></i>
+          <i class="bi bi-box"></i>
           <span>Produk</span>
         </a>
       </li><!-- End Produk Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="keranjang.php">
-          <i class="bi bi-bag"></i>
+          <i class="bi bi-cart"></i>
           <span>Keranjang</span>
         </a>
       </li><!-- End Keranjang Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="transaksi.php">
-          <i class="bi bi-wallet"></i>
+          <i class="bi bi-card-list"></i>
           <span>Transaksi</span>
         </a>
       </li><!-- End Transaksi Page Nav -->
