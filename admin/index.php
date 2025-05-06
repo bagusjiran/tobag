@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Beranda - Tobag Admin</title>
+  <title>Beranda - ToBag Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -46,7 +46,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Tobag</span>
+        <span class="d-none d-lg-block">ToBag</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -64,7 +64,7 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Danta Ferdinan</h6>
+              <h6>Bagus Jiran</h6>
               <span>Web Designer</span>
             </li>
             <li>
@@ -93,7 +93,7 @@
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-        <i class="bi bi-house"></i>
+        <i class="bi bi-house-door"></i>
           <span>Beranda</span>
         </a>
       </li><!-- End Dashboard Nav -->
@@ -115,7 +115,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="Keranjang.php">
-          <i class="bi bi-envelope"></i>
+          <i class="bi bi-cart"></i>
           <span>Keranjang</span>
         </a>
       </li><!-- End Keranjang Nav -->
@@ -136,7 +136,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pengguna.php">
-          <i class="bi bi-dash-circle"></i>
+          <i class="bi bi-person-circle"></i>
           <span>Pengguna</span>
         </a>
       </li><!-- End pengguna Nav -->
@@ -232,7 +232,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>Tobag</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
