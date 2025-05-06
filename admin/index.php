@@ -100,14 +100,14 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="kategori.php">
-        <i class="bi bi-box"></i>
-          <span>Kategori Produk</span>
+        <i class="bi bi-tags"></i>
+          <span>Kategori</span>
         </a>
       </li><!-- End Kategori Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="Produk.php">
-          <i class="bi bi-question-circle"></i>
+          <i class="bi bi-box"></i>
           <span>Produk</span>
         </a>
       </li><!-- End Produk Nav -->

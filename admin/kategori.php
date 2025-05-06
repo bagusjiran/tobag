@@ -9,7 +9,7 @@ include "koneksi.php";
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Kategori Produk - Tobag Admin</title>
+  <title>Kategori Produk - Toag Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -50,7 +50,7 @@ include "koneksi.php";
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Tobag</span>
+        <span class="d-none d-lg-block">ToBag</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -110,7 +110,7 @@ include "koneksi.php";
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-          <i class="bi bi-house"></i>
+          <i class="bi bi-house-door"></i>
           <span>Beranda</span>
         </a>
       </li><!-- End Beranda Nav -->
@@ -145,7 +145,7 @@ include "koneksi.php";
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="laporan.php">
-          <i class="bi bi-exclamation-triangle"></i>
+          <i class="bi bi-box-arrow-in-right"></i>
           <span>Laporan</span>
         </a>
       </li><!-- End Laporan Page Nav -->
@@ -256,7 +256,7 @@ include "koneksi.php";
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>Tobag</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
