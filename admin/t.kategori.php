@@ -1,48 +1,24 @@
 <?php
-include "koneksi.php";
-
-// Fungsi untuk menghasilkan ID kategori secara otomatis
-function generateKategoriId($koneksi) {
-    $query = "SELECT MAX(id_kategori) AS max_id FROM tb_kategori";
-    $result = $koneksi->query($query);
-    $row = $result->fetch_assoc();
-    $maxId = $row['max_id'];
-
-    // Jika belum ada data, mulai dari ID pertama
-    if ($maxId == null) {
-        return "KAT001";
-    }
-
-    // Ambil angka dari ID terakhir dan tambahkan 1
-    $number = (int)substr($maxId, 3) + 1;
-    return "KAT" . str_pad($number, 3, "0", STR_PAD_LEFT);
-}
-
+include 'koneksi.php';
 if (isset($_POST['simpan'])) {
+    $auto = mysqli_query($koneksi, "select max(id_kategori) as max_code from tb_kategori");
+    $hasil = mysqli_fetch_array($auto);
+    $code = $hasil['max_code'];
+    $urutan = (int) substr($code, 1, 3);
+    $urutan++;
+    $huruf = "K";
+    $id_kategori = $huruf . sprintf("%03s", $urutan);
     $nm_kategori = $_POST['nm_kategori'];
 
-    // Hindari SQL Injection dengan Prepared Statement
-    $stmt = $koneksi->prepare("INSERT INTO tb_kategori (id_kategori, nm_kategori) VALUES (?, ?)");
-    if (!$stmt) {
-        die("Error preparing statement: " . $koneksi->error);
-    }
+    $query = mysqli_query($koneksi, "insert into tb_kategori(id_kategori, nm_kategori) values ('$id_kategori','$nm_kategori')");
+        if ($query) {
+            echo "<script>alert('Data Berhasil Disimpan')</script>";
+            header("refresh:0; kategori.php");
+        } else {
+            echo "<script>alert('Data Gagal Disimpan')</script>";
+            header("refresh:0; kategori.php");
+        }   
 
-    // Generate ID Kategori secara otomatis
-    $id_kategori = generateKategoriId($koneksi);
-
-    $stmt->bind_param("ss", $id_kategori, $nm_kategori); // "ss" karena kedua parameter adalah string
-
-    if ($stmt->execute()) {
-        // Redirect ke halaman kategori dengan parameter untuk menampilkan pesan sukses
-        header("Location: kategori.php?status=sukses");
-        exit; // Penting untuk menghentikan eksekusi setelah header
-    } else {
-        // Redirect ke halaman kategori dengan parameter untuk menampilkan pesan error
-        header("Location: kategori.php?status=gagal");
-        exit; // Penting untuk menghentikan eksekusi setelah header
-    }
-
-    $stmt->close();
 }
 ?>
 
@@ -53,7 +29,7 @@ if (isset($_POST['simpan'])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Beranda -  Admin of ToBag</title>
+  <title>Kategori - Sclothes Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -94,32 +70,24 @@ if (isset($_POST['simpan'])) {
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Admin of ToBag</span>
+        <span class="d-none d-lg-block">Sclothes</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
-
-
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile.png" alt="Profile" class="rounded-circle">
-          
+            <img src="assets/img/ytta.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Admin of ToBag</h6>
-              <span>Admin</span>
+              <h6>Bagus Jiran</h6>
+              <span>Web Designer</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -140,59 +108,58 @@ if (isset($_POST['simpan'])) {
 
   </header><!-- End Header -->
 
-  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-house"></i>
           <span>Beranda</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li><!-- End Beranda Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="kategori.php">
-          <i class="bi bi-person"></i>
-          <span>Kategori Prodack</span>
+          <i class="bi bi-tags"></i>
+          <span>Kategori</span>
         </a>
-      </li><!-- End kategori Page Nav -->
+      </li><!-- End Kategori Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="produk.php">
-          <i class="bi bi-question-circle"></i>
+          <i class="bi bi-archive"></i>
           <span>Produk</span>
         </a>
       </li><!-- End Produk Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="kranjang.php">
-          <i class="bi bi-envelope"></i>
+        <a class="nav-link collapsed" href="keranjang.php">
+          <i class="bi bi-bag"></i>
           <span>Keranjang</span>
         </a>
       </li><!-- End Keranjang Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="transaksi.php">
-          <i class="bi bi-card-list"></i>
+          <i class="bi bi-wallet"></i>
           <span>Transaksi</span>
         </a>
       </li><!-- End Transaksi Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="laporan.php">
-          <i class="bi bi-box-arrow-in-right"></i>
+          <i class="bi bi-exclamation-triangle"></i>
           <span>Laporan</span>
         </a>
       </li><!-- End Laporan Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
-          <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
+        <a class="nav-link collapsed" href="pengguna.php">
+          <i class="bi bi-person-circle"></i>
+          <span>Pengguna</span>
         </a>
-      </li><!-- End Error 404 Page Nav -->
+      </li><!-- End Pengguna Page Nav -->
 
     </ul>
 
@@ -201,46 +168,46 @@ if (isset($_POST['simpan'])) {
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Kategori Product</h1>
+      <h1>Kategori</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-          <li class="breadcrumb-item">Kategori Produk</li>
+          <li class="breadcrumb-item">Kategori</li>
           <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
-    <section class="section dashboard">
+    
+    <section class="section">
       <div class="row">
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Tambah Kategori</h5>
-
-              <!-- Form Tambah Kategori -->
+              <!-- Vertical Form -->
               <form class="row g-3 mt-2" method="post">
                 <div class="col-12">
                   <label for="nm_kategori" class="form-label">Nama Kategori</label>
-                  <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" placeholder="Masukkan Nama Kategori Produk" required>
+                  <input type="text" class="form-control" name="nm_kategori" id="nm_kategori " placeholder="Masukkan Nama Kategori Produk">
                 </div>
                 <div class="text-center">
                   <button type="reset" class="btn btn-secondary">Reset</button>
                   <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                 </div>
-              </form><!-- End Form Tambah Kategori -->
+              </form><!-- Vertical Form -->
 
             </div>
           </div>
+
         </div>
       </div>
     </section>
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>Tobag</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
