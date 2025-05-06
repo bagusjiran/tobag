@@ -65,7 +65,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Bagus Jiran</h6>
-              <span>Web Designer</span>
+              <span>Administrator</span>
             </li>
             <li>
               <hr class="dropdown-divider">
