@@ -112,7 +112,7 @@ if (isset($_POST['simpan'])) {
 
             <li class="nav-item">
                 <a class="nav-link " href="index.php">
-                    <i class="bi bi-house"></i>
+                    <i class="bi bi-house-door"></i>
                     <span>Beranda</span>
                 </a>
             </li><!-- End Beranda Nav -->
@@ -126,28 +126,28 @@ if (isset($_POST['simpan'])) {
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="produk.php">
-                    <i class="bi bi-archive"></i>
+                    <i class="bi bi-box"></i>
                     <span>Produk</span>
                 </a>
             </li><!-- End Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="keranjang.php">
-                    <i class="bi bi-bag"></i>
+                    <i class="bi bi-cart"></i>
                     <span>Keranjang</span>
                 </a>
             </li><!-- End Keranjang Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="transaksi.php">
-                    <i class="bi bi-wallet"></i>
+                    <i class="bi bi-card-list"></i>
                     <span>Transaksi</span>
                 </a>
             </li><!-- End Transaksi Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="laporan.php">
-                    <i class="bi bi-exclamation-triangle"></i>
+                    <i class="bi bi-box-arrow-in-right"></i>
                     <span>Laporan</span>
                 </a>
             </li><!-- End Laporan Page Nav -->
@@ -178,7 +178,7 @@ if (isset($_POST['simpan'])) {
 
         <section class="section">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <form class="row g-3 mt-2" method="post">
