@@ -26,7 +26,7 @@ if (isset($_POST['simpan'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori - sclothes Admin</title>
+    <title>Kategori - Tobag Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -67,7 +67,7 @@ if (isset($_POST['simpan'])) {
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
                 <img src="assets/img/ytta.jpg" alt="">
-                <span class="d-none d-lg-block">sclothes</span>
+                <span class="d-none d-lg-block">Tobag</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -84,7 +84,7 @@ if (isset($_POST['simpan'])) {
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Danta Ferdinan</h6>
+                            <h6>Bagus Jiran</h6>
                             <span>Web Designer</span>
                         </li>
                         <li>
