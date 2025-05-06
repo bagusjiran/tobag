@@ -29,7 +29,7 @@ if (isset($_POST['simpan'])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Kategori - Sclothes Admin</title>
+  <title>Kategori - ToBag Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -70,7 +70,7 @@ if (isset($_POST['simpan'])) {
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Sclothes</span>
+        <span class="d-none d-lg-block">ToBag</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -80,7 +80,7 @@ if (isset($_POST['simpan'])) {
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/ytta.jpg" alt="Profile" class="rounded-circle">
+            <img src="assets/img/logo.png" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"></span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -114,7 +114,7 @@ if (isset($_POST['simpan'])) {
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-          <i class="bi bi-house"></i>
+          <i class="bi bi-house-door"></i>
           <span>Beranda</span>
         </a>
       </li><!-- End Beranda Nav -->
@@ -128,21 +128,21 @@ if (isset($_POST['simpan'])) {
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="produk.php">
-          <i class="bi bi-archive"></i>
+          <i class="bi bi-box"></i>
           <span>Produk</span>
         </a>
       </li><!-- End Produk Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="keranjang.php">
-          <i class="bi bi-bag"></i>
+          <i class="bi bi-cart"></i>
           <span>Keranjang</span>
         </a>
       </li><!-- End Keranjang Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="transaksi.php">
-          <i class="bi bi-wallet"></i>
+          <i class="bi bi-card-list"></i>
           <span>Transaksi</span>
         </a>
       </li><!-- End Transaksi Page Nav -->
@@ -207,7 +207,7 @@ if (isset($_POST['simpan'])) {
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>Tobag</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
