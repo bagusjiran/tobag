@@ -1,3 +1,32 @@
+<?php
+include 'koneksi.php';
+if (isset($_POST['simpan'])) {
+    $auto = mysqli_query($koneksi, "select max(id_produk) as max_code from tb_produk");
+    $hasil = mysqli_fetch_array($auto);
+    $code = $hasil['max_code'];
+    $urutan = (int) substr($code, 1, 3);
+    $urutan++;
+    $huruf = "P";
+    $id_produk = $huruf . sprintf("%03s", $urutan);
+    $nm_produk = $_POST['nm_kategori'];
+    $harga = $_POST['harga'];
+    $stok = $_POST['stok'];
+    $desk = $_POST['desk'];
+
+
+
+    $query = mysqli_query($koneksi, "insert into tb_produk(id_produk, nm_produk, harga, stok, desk) values ('$id_produk','$nm_produk','$harga, '$stok', '$desk')");
+        if ($query) {
+            echo "<script>alert('Data Berhasil Disimpan')</script>";
+            header("refresh:0; produk.php");
+        } else {
+            echo "<script>alert('Data Gagal Disimpan')</script>";
+            header("refresh:0; produk.php");
+        }   
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +34,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Beranda - ToBag Admin</title>
+  <title>Kategori - ToBag Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -53,12 +82,11 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
-
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/apple-touch-icon.png" alt="Profile" class="rounded-circle">
+            <img src="assets/img/logo.png" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -85,62 +113,59 @@
 
   </header><!-- End Header -->
 
-  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
         <a class="nav-link " href="index.php">
-        <i class="bi bi-house-door"></i>
+          <i class="bi bi-house-door"></i>
           <span>Beranda</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li><!-- End Beranda Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="kategori.php">
-        <i class="bi bi-tags"></i>
+          <i class="bi bi-tags"></i>
           <span>Kategori</span>
         </a>
-      </li><!-- End Kategori Nav -->
+      </li><!-- End Kategori Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="Produk.php">
+        <a class="nav-link collapsed" href="produk.php">
           <i class="bi bi-box"></i>
           <span>Produk</span>
         </a>
-      </li><!-- End Produk Nav -->
-
+      </li><!-- End Produk Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="Keranjang.php">
+        <a class="nav-link collapsed" href="keranjang.php">
           <i class="bi bi-cart"></i>
           <span>Keranjang</span>
         </a>
-      </li><!-- End Keranjang Nav -->
+      </li><!-- End Keranjang Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="transaksi.php">
           <i class="bi bi-card-list"></i>
           <span>Transaksi</span>
         </a>
-      </li><!-- End Register Page Nav -->
+      </li><!-- End Transaksi Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="laporan.php">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Laporan</span>
         </a>
-      </li><!-- End laporan Nav -->
+      </li><!-- End Laporan Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pengguna.php">
           <i class="bi bi-person-circle"></i>
           <span>Pengguna</span>
         </a>
-      </li><!-- End pengguna Nav -->
+      </li><!-- End Pengguna Page Nav -->
 
-      
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -148,77 +173,61 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Beranda</h1>
+      <h1>Kategori</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-          <li class="breadcrumb-item active">Beranda</li>
+          <li class="breadcrumb-item">Kategori</li>
+          <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
-    <section class="section dashboard">
+    
+    <section class="section">
       <div class="row">
-
-        <!-- Left side columns -->
-        <div class="col-lg-16">
-          <div class="row">
-
-            <!-- Welcome Card -->
-            <div class="col-12">
-              <div class="card info-card customers-card shadow-sm w-100">
-                <div class="card-body text-center py-4">
-                  <h4 class="mb-2">Selamat datang di Website Admin <strong>ToBag</strong></h4>
-                  <p class="text-muted small mb-0">Kelola produk, transaksi, dan pelanggan dengan mudah</p>
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <!-- Vertical Form -->
+              <form class="row g-3 mt-2" method="post">
+                <div class="col-12">
+                  <label for="nm_produk" class="form-label">Nama Produk</label>
+                  <input type="text" class="form-control" name="nm_produk" id="nm_produk " placeholder="Masukkan Nama Produk yang akan di jual">
                 </div>
-              </div>
-
-            </div><!-- End Customers Card -->
-
-            <!-- Sales Card -->
-            <div class="col-xxl-8 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Pesanan <span>| Semua waktu</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>145</h6>
-                    </div>
-                  </div>
+                <div class="col-12">
+                  <label for="nm_produk" class="form-label">Nama Produk</label>
+                  <input type="text" class="form-control" name="nm_produk" id="nm_produk " placeholder="Masukkan Nama Produk yang akan di jual">
                 </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-8 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Pendapatan <span>| Hari ini</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>Rp. 32.264,-</h6>
-                    </div>
-                  </div>
+                <div class="col-12">
+                  <label for="nm_produk" class="form-label">Nama Produk</label>
+                  <input type="text" class="form-control" name="nm_produk" id="nm_produk " placeholder="Masukkan Nama Produk yang akan di jual">
                 </div>
+                <div class="col-12">
+                  <label for="nm_kategori" class="form-label">Nama Produk</label>
+                  <input type="text" class="form-control" name="nm_produk" id="nm_produk " placeholder="Masukkan Nama Produk yang akan di jual">
+                </div>
+                <div class="col-12">
+                  <label for="nm_kategori" class="form-label">Nama Produk</label>
+                  <input type="text" class="form-control" name="nm_produk" id="nm_produk " placeholder="Masukkan Nama Produk yang akan di jual">
+                </div>
+                <div class="col-12">
+                  <label for="nm_kategori" class="form-label">Nama Produk</label>
+                  <input type="text" class="form-control" name="nm_produk" id="nm_produk " placeholder="Masukkan Nama Produk yang akan di jual">
+                </div>
+                <div class="col-12">
+                  <label for="nm_kategori" class="form-label">Nama Produk</label>
+                  <input type="text" class="form-control" name="nm_produk" id="nm_produk " placeholder="Masukkan Nama Produk yang akan di jual">
+                </div>
+                <div class="text-center">
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                </div>
+              </form><!-- Vertical Form -->
 
-              </div>
-            </div><!-- End Revenue Card -->
-
-
-           
+            </div>
           </div>
-        </div><!-- End Left side columns -->
+
+        </div>
       </div>
     </section>
 
@@ -234,7 +243,7 @@
       <!-- You can delete the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://wa.me/6282322238082">Smart People</a>
+      Designed by <a href="https://wa.me/6282322238082" target="_blank">Smart People</a>
     </div>
   </footer><!-- End Footer -->
 

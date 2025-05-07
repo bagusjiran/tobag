@@ -80,8 +80,7 @@ if (isset($_POST['simpan'])) {
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/logo.png" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
+            <img src="assets/img/apple-touch-icon.png" alt="Profile" class="rounded-circle">
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -149,7 +148,7 @@ if (isset($_POST['simpan'])) {
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="laporan.php">
-          <i class="bi bi-exclamation-triangle"></i>
+          <i class="bi bi-box-arrow-in-right"></i>
           <span>Laporan</span>
         </a>
       </li><!-- End Laporan Page Nav -->
@@ -180,7 +179,7 @@ if (isset($_POST['simpan'])) {
     
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
               <!-- Vertical Form -->
