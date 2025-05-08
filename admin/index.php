@@ -1,3 +1,24 @@
+<?php
+session_start();
+include "koneksi.php";
+
+// cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+  header ("location: login.php");
+  exit;
+}
+
+// cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+  echo "<script>
+    alert('Akses ditolak! Halaman ini hanya untuk Admin.';
+    windows.location.href='login.php';
+    </script>";
+    exit;
+   
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,7 +84,7 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Bagus Jiran</h6>
+              <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
               <span>Administrator</span>
             </li>
             <li>
@@ -71,7 +92,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="logout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
