@@ -17,8 +17,11 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
     exit;
    
 }
+
+password_hash('admin#123', PASSWORD_DEFAULT)
 ?>
 
+<?php password_hash('admin#123', PASSWORD_DEFAULT) ?>
 
 
-<h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest '; ?></h6>
+<h6><?php  echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest '; ?> </h6>
