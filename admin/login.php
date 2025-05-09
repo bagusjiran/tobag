@@ -14,23 +14,27 @@ if (isset($_POST["login"])) {
 
         // Cek password
         if (password_verify($password, $row["password"])) {
-            // Cek apakah status admin
-            if ($row["status"] === "admin") {
-                $_SESSION["login"] = true;
-                $_SESSION["username"] = $row["username"];
-                $_SESSION["status"] = $row["status"];
-                header("Location: index.php");
-                exit;
-            } else {
-                echo "<script>alert('Anda tidak memiliki akses sebagai admin of ToBag.');</script>";
-            }
+          $_SESSION["login"] = true;
+          $_SESSION["username"] = $row["username"];
+          $_SESSION["status"] = $row["status"];
+      
+          // Pengalihan berdasarkan status
+          if ($row["status"] === "superuser") {
+              header("Location: superadmin_dashboard.php");
+              exit;
+          } elseif ($row["status"] === "admin") {
+              header("Location: index.php");
+              exit;
+          } else {
+              echo "<script>alert('Anda tidak memiliki akses sebagai admin.');</script>";
+          }
         } else {
             echo "<script>alert('Username atau Password yang Anda masukkan salah.');</script>";
-        }
+          }
     } else {
-        echo "<script>alert('Username atau Password yang Anda masukkan salah.');</script>";
+        echo "<script>alert('Username tidak ditemukan.');</script>";
     }
-}
+  } 
 ?>
 
 <!DOCTYPE html>

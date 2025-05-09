@@ -9,12 +9,15 @@ if (!isset($_SESSION)) {
 }
 
 // cek apakah status tersedia dan pastikan user adalah admin
-if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION["status"] !== "superuser") {
+    // Jika bukan admin, tampilkan pesan akses ditolak
+    // dan redirect ke halaman login
   echo "<script>
     alert('Akses ditolak! Halaman ini hanya untuk Admin.';
     windows.location.href='login.php';
     </script>";
     exit;
+}
 if (isset($_POST['simpan'])) {
     $auto = mysqli_query($koneksi, "select max(id_user) as max_code from tb_user");
     $hasil = mysqli_fetch_array($auto);
@@ -29,6 +32,13 @@ if (isset($_POST['simpan'])) {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // hashing password
     $status = $_POST['status'];
 
+    // Cegah input status superuser secara paksa
+    if ($status === 'superuser') {
+        echo "<script>alert('Tidak dapat membuat user dengan status superuser.'); window.location.href='t.pengguna.php';</script>";
+        exit;
+   }
+
+
     // Query untuk menyimpan data ke database
     $query = mysqli_query( $koneksi, "INSERT INTO tb_user (id_user, username, password, status) VALUES ('$id_user', '$username', '$password', '$status')");
 
@@ -39,7 +49,7 @@ if (isset($_POST['simpan'])) {
         echo "<script>alert('Data gagal disimpan.'); window.location.href='t.pengguna.php';</script>";
     }
  }
-}
+
 ?>
 
 
@@ -94,7 +104,7 @@ if (isset($_POST['simpan'])) {
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <img src="assets/img/logo.png" alt="Profile" class="rounded-circle">
                         <!-- profile-img.jpg diganti nama file gambar kalian -->
                     </a><!-- End Profile Iamge Icon -->
 

@@ -9,12 +9,15 @@ if (!isset($_SESSION)) {
 }
 
 // cek apakah status tersedia dan pastikan user adalah admin
-if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION["status"] !== "superuser") {
+    // Jika bukan admin, tampilkan pesan akses ditolak
+    // dan redirect ke halaman login
   echo "<script>
     alert('Akses ditolak! Halaman ini hanya untuk Admin.';
     windows.location.href='login.php';
     </script>";
     exit;
+}
 
 if (isset($_POST['simpan'])) {
     $auto = mysqli_query($koneksi, "SELECT max(id_produk) as max_code FROM tb_produk");

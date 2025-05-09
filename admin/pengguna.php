@@ -9,7 +9,7 @@ if (!isset($_SESSION)) {
 }
 
 // cek apakah status tersedia dan pastikan user adalah admin
-if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION["status"] !== "superuser") {
   echo "<script>
     alert('Akses ditolak! Halaman ini hanya untuk Admin.';
     windows.location.href='login.php';
@@ -89,8 +89,8 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Bagus Jiran</h6>
-                            <span>Admin</span>
+                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest '; ?></h6>
+                            <span>Administator</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -220,7 +220,12 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
                                     $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
 
                                     // query dasar
-                                    $sql_query = "SELECT id_user, username, status FROM tb_user";
+                                    $sql_query = "SELECT id_user, username, status FROM tb_user WHERE status != 'superuser'";
+
+                                    if (!empty($query)) {
+                                    $sql_query .= " AND username LIKE '%$query%'";
+                                   }
+
 
                                     // tambahkan jika input tidak kosong
                                     if (!empty($query)) {
