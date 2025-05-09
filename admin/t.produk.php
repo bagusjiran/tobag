@@ -1,52 +1,53 @@
 <?php
 include 'koneksi.php';
+
 if (isset($_POST['simpan'])) {
-    $auto = mysqli_query($koneksi, "select max(id_produk) as max_code from tb_produk");
+    $auto = mysqli_query($koneksi, "SELECT max(id_produk) as max_code FROM tb_produk");
     $hasil = mysqli_fetch_array($auto);
     $code = $hasil['max_code'];
-    $urutan = (int) substr($code, 1, 3);
+
+    if ($code) {
+        $urutan = (int) substr($code, 1, 3);
+    } else {
+        $urutan = 0;
+    }
     $urutan++;
     $huruf = "P";
     $id_produk = $huruf . sprintf("%03s", $urutan);
-    
-    if (isset($_POST['simpan'])) {
-      $nm_produk = $_POST['nm_produk'];
-      $harga = $_POST['harga'];
-      $stok = $_POST['stok'];
-      $desk = $_POST['desk'];
-      $id_kategori = $_POST['id_kategori'];
 
+    $nm_produk = $_POST['nm_produk'];
+    $harga = $_POST['harga'];
+    $stok = $_POST['stok'];
+    $desk = $_POST['desk'];
+    $id_kategori = $_POST['id_kategori'];
 
+    $imgfile = $_FILES['gambar']['name'];
+    $tmp = $_FILES['gambar']['tmp_name'];
+    $extension = strtolower(pathinfo($imgfile, PATHINFO_EXTENSION));
 
-      // upload gambar
-      $imgfile = $_FILES['gambar']['name'];
-      $tmp = $_FILES['gambar']['tmp_name'];
-      $extension = strtolower(pathinfo($imgfile, PATHINFO_EXTENSION));
+    $dir = "produk_img/";
+    $allowed_extension = array('jpg', 'jpeg', 'png', 'gif', 'webp');
 
-
-      $dir = "produk_img/";
-      $allowed_extension = array('jpg', 'jpeg', 'png', 'gif');
-
-      if (!in_array($extension, $allowed_extension)) {
-        echo "<script>alert('Format Gambar Tidak valid. Hanya jpg, jpeg, png, dan webp yang diperbolehkan.')</script>";
-
+    if (!in_array($extension, $allowed_extension)) {
+        echo "<script>alert('Format Gambar Tidak valid. Hanya jpg, jpeg, png, gif, dan webp yang diperbolehkan.')</script>";
     } else {
         $newfilename = $id_produk . '.' . $extension;
         move_uploaded_file($tmp, $dir . $newfilename);
 
-        // simpan ke database
-        $query = mysqli_query($koneksi, "insert into tb_produk(id_produk, nm_produk, harga, stok, ket, id_kategori, gambar) values ('$id_produk','$nm_produk','$harga', '$stok', '$desk','$id_kategori, '$newfilename')");
+        $query = mysqli_query($koneksi, "INSERT INTO tb_produk(id_produk, nm_produk, harga, stok, desk, id_kategori, gambar) 
+        VALUES ('$id_produk', '$nm_produk', '$harga', '$stok', '$desk', '$id_kategori', '$newfilename')");
+
         if ($query) {
             echo "<script>alert('Data Berhasil Disimpan')</script>";
-            header("refresh:0; produk.php");
+            header("refresh:0; url=produk.php");
         } else {
             echo "<script>alert('Data Gagal Disimpan')</script>";
-            header("refresh:0; produk.php");
+            header("refresh:0; url=produk.php");
         }
     }
-  }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

@@ -3,36 +3,34 @@ session_start();
 require "koneksi.php";
 
 if (isset($_POST["login"])) {
-    $username = $_POST["username"];
+    $username = mysqli_real_escape_string($koneksi, $_POST["username"]);
     $password = $_POST["password"];
 
-    // cek apakah username ditemukan
-    $result = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE username = '$username");
+    // Cek apakah username ditemukan
+    $result = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE username='$username'");
 
-    if (mysqli_num_rows($result) === 1) {
+    if ($result && mysqli_num_rows($result) === 1) {
         $row = mysqli_fetch_assoc($result);
-        // cek pasword
+
+        // Cek password
         if (password_verify($password, $row["password"])) {
-            // cek apakah status admin
-            if ($row["sts"] === "admin") {
+            // Cek apakah status admin
+            if ($row["status"] === "admin") {
                 $_SESSION["login"] = true;
                 $_SESSION["username"] = $row["username"];
-                $_SESSION["status"] = $row["sts"];
-                header("location: index.php");
+                $_SESSION["status"] = $row["status"];
+                header("Location: index.php");
                 exit;
             } else {
-                echo "<script>alert('Anda tidak memiliki akses sebagai admin of ToBag.')</script>";
-
+                echo "<script>alert('Anda tidak memiliki akses sebagai admin of ToBag.');</script>";
             }
         } else {
-            echo "<script>alert('Username atau Pasword yang anda masukan salah.')</script>";
+            echo "<script>alert('Username atau Password yang Anda masukkan salah.');</script>";
         }
     } else {
-        echo "<script>alert('Username atau Pasword yang anda masukan salah.')</script>";
+        echo "<script>alert('Username atau Password yang Anda masukkan salah.');</script>";
     }
-            
-        }
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +91,8 @@ if (isset($_POST["login"])) {
                     <p class="text-center small">Enter your username & password to login</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form class="row g-3 needs-validation" method="POST" action="">
+
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>

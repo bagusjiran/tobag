@@ -4,7 +4,7 @@ include "koneksi.php";
 
 // cek apakah sudah login
 if (!isset($_SESSION["login"])) {
-  header ("location: login.php");
+  header("location: login.php");
   exit;
 }
 
