@@ -80,7 +80,7 @@ $data = mysqli_fetch_array($sql);
                         <div class="col-lg-3">
                             <div class="logo pb-sm-30 pb-xs-30">
                                 <a href="index.php">
-                                    <h1>Technozone</h1>
+                                    <h1>ToBag</h1>
                                 </a>
                             </div>
                         </div>
@@ -200,7 +200,7 @@ $data = mysqli_fetch_array($sql);
                     <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
                         <!-- Banner Image -->
                         <div class="banner-wrapper text-center">
-                            <img src="images/bg-banner/4.png" alt="Banner Toko Elektronik" class="img-fluid" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%;">
+                            <img src="images/bg-banner/accer2.png" alt="Banner Toko Elektronik" class="img-fluid" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%;">
                             <p class="mt-3" style="font-size: 16px; color: #555;">
                                 <br>ToBag kepercayaan anda menyediakan peralatan elektronik masa kini!</br>
                                 <a href="login.php" style="color:rgb(2, 24, 149); text-decoration: underline">Sudah punya akun? Login di sini.</a>
@@ -251,7 +251,7 @@ $data = mysqli_fetch_array($sql);
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Pengiriman Gratis</h2>
-                                        <p>Dan pengembalian gratis. Lihat di halaman checkout untuk tanggal pengiriman.</p>
+                                        <p>Dan pengembalian gratis sepuasnya. Lihat di halaman pengiriman.</p>
                                     </div>
                                 </div>
                             </div>
@@ -264,8 +264,8 @@ $data = mysqli_fetch_array($sql);
                                         <img src="images/shipping-icon/2.png" alt="Ikon Pengiriman">
                                     </div>
                                     <div class="shipping-text">
-                                        <h2>Pembayaran Aman</h2>
-                                        <p>Bayar dengan metode pembayaran paling populer dan aman di dunia.</p>
+                                        <h2>Pembayaran Terpercaya</h2>
+                                        <p>Bayar dengan metode pembayaran yang aman dan terpercaya di seluruh indonesia.</p>
                                     </div>
                                 </div>
                             </div>
@@ -278,8 +278,8 @@ $data = mysqli_fetch_array($sql);
                                         <img src="images/shipping-icon/3.png" alt="Ikon Pengiriman">
                                     </div>
                                     <div class="shipping-text">
-                                        <h2>Belanja dengan Percaya Diri</h2>
-                                        <p Per>Perlindungan Pembeli kami melindungi pembelian Anda dari klik hingga pengiriman.</p>
+                                        <h2>Belanja dengan aman</h2>
+                                        <p Per>Perlindungan terhadap pembelian setiap teransaksi yang ada.</p>
                                     </div>
                                 </div>
                             </div>
@@ -292,8 +292,8 @@ $data = mysqli_fetch_array($sql);
                                         <img src="images/shipping-icon/4.png" alt="Ikon Pengiriman">
                                     </div>
                                     <div class="shipping-text">
-                                        <h2>Pusat Bantuan 24/7</h2>
-                                        <p>Punya pertanyaan? Hubungi Spesialis kami atau chat secara online.</p>
+                                        <h2>Pusat Bantuan</h2>
+                                        <p>melayani sepenuh hati.</p>
                                     </div>
                                 </div>
                             </div>

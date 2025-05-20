@@ -254,7 +254,7 @@ session_start();
                         <!-- Begin Li's Banner Area -->
                         <div class="single-banner shop-page-banner">
                             <a href="#">
-                                <img src="images/bg-banner/3.png" alt="Li's Static Banner" height="350">
+                                <img src="images/bg-banner/accer.png" alt="Li's Static Banner" height="350">
                             </a>
                         </div>
                         <!-- Li's Banner Area End Here -->
@@ -287,8 +287,6 @@ session_start();
                                 ?>
                                 <span class="mt-1">Menampilkan <?= $start ?> hingga <?= $end ?> dari <?= $totalData ?> produk</span>
                             </div>
-                            <!-- product-select-box start -->
-                            <!-- product-select-box end -->
                         </div>
                         <!-- shop-top-bar end -->
                         <!-- shop-products-wrapper start -->
@@ -487,7 +485,7 @@ session_start();
                                                     <div class="col-lg-3 col-md-5">
                                                         <div class="product-image">
                                                             <a href="detail_produk.php?id=<?= $data['id_produk']; ?>">
-                                                                <img src="admin/produk_img/<?= $data['gambar']; ?>" alt="<?= $data['nm_produk']; ?>" >
+                                                                <img src="admin/produk_img/<?= $data['gambar']; ?>" alt="<?= $data['nm_produk']; ?>" height="250">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -539,13 +537,11 @@ session_start();
                                                 <?php if ($page > 1) : ?>
                                                     <li><a href="?page=<?= $page - 1 ?>&kategori=<?= $kategori ?>&keyword=<?= $keyword ?>" class="Previous"><i class="fa fa-chevron-left"></i> Sebelumnya</a></li>
                                                 <?php endif; ?>
-
                                                 <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                                                     <li class="<?= ($i == $page) ? 'active' : '' ?>">
                                                         <a href="?page=<?= $i ?>&kategori=<?= $kategori ?>&keyword=<?= $keyword ?>"><?= $i ?></a>
                                                     </li>
                                                 <?php endfor; ?>
-
                                                 <?php if ($page < $totalPages) : ?>
                                                     <li><a href="?page=<?= $page + 1 ?>&kategori=<?= $kategori ?>&keyword=<?= $keyword ?>" class="Next">Berikutnya <i class="fa fa-chevron-right"></i></a></li>
                                                 <?php endif; ?>
@@ -615,7 +611,7 @@ session_start();
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Pengiriman Gratis</h2>
-                                        <p>Dan pengembalian gratis. Lihat di halaman checkout untuk tanggal pengiriman.</p>
+                                        <p>Dan pengembalian gratis sepuasnya. Lihat di halaman pengiriman.</p>
                                     </div>
                                 </div>
                             </div>
@@ -628,8 +624,8 @@ session_start();
                                         <img src="images/shipping-icon/2.png" alt="Ikon Pengiriman">
                                     </div>
                                     <div class="shipping-text">
-                                        <h2>Pembayaran Aman</h2>
-                                        <p>Bayar dengan metode pembayaran paling populer dan aman di dunia.</p>
+                                        <h2>Pembayaran Terpercaya</h2>
+                                        <p>Bayar dengan metode pembayaran yang aman dan terpercaya di seluruh indonesia.</p>
                                     </div>
                                 </div>
                             </div>
@@ -642,8 +638,8 @@ session_start();
                                         <img src="images/shipping-icon/3.png" alt="Ikon Pengiriman">
                                     </div>
                                     <div class="shipping-text">
-                                        <h2>Belanja dengan Percaya Diri</h2>
-                                        <p Per>Perlindungan Pembeli kami melindungi pembelian Anda dari klik hingga pengiriman.</p>
+                                        <h2>Belanja dengan aman</h2>
+                                        <p Per>Perlindungan terhadap pembelian setiap teransaksi yang ada.</p>
                                     </div>
                                 </div>
                             </div>
@@ -656,8 +652,8 @@ session_start();
                                         <img src="images/shipping-icon/4.png" alt="Ikon Pengiriman">
                                     </div>
                                     <div class="shipping-text">
-                                        <h2>Pusat Bantuan 24/7</h2>
-                                        <p>Punya pertanyaan? Hubungi Spesialis kami atau chat secara online.</p>
+                                        <h2>Pusat Bantuan</h2>
+                                        <p>melayani sepenuh hati.</p>
                                     </div>
                                 </div>
                             </div>
