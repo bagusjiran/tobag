@@ -254,7 +254,7 @@ session_start();
                         <!-- Begin Li's Banner Area -->
                         <div class="single-banner shop-page-banner">
                             <a href="#">
-                                <img src="images/bg-banner/accer.png" alt="Li's Static Banner" height="350">
+                                <img src="images/bg-banner/accer.png" alt="Li's Static Banner" height="400">
                             </a>
                         </div>
                         <!-- Li's Banner Area End Here -->
@@ -689,7 +689,7 @@ session_start();
                                     </li>
                                     <li>
                                         <span>Email: </span>
-                                        <a href="mailto:info@ToBag.id">info@ToBag.id</a>
+                                        <a href="mailto:info@ToBag.co.id">info@ToBag.co.id</a>
                                     </li>
                                 </ul>
                             </div>
