@@ -30,7 +30,7 @@ if (isset($_POST["login"])) {
           }
         } else {
             echo "<script>alert('Username atau Password yang Anda masukkan salah.');</script>";
-          }
+        }
     } else {
         echo "<script>alert('Username tidak ditemukan.');</script>";
     }
@@ -96,18 +96,18 @@ if (isset($_POST["login"])) {
                   </div>
 
                   <form class="row g-3 needs-validation" method="POST" action="">
-
-
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="username" class="form-label">Username</label>
+                      <div class="input-group">
                         <input type="text" name="username" class="form-control" id="yourUsername" required>
                       </div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
+                      <label for="password" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
                     </div>
+
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit" name="login">Login</button>
                     </div>
