@@ -66,7 +66,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
 
         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo (isset($_POST['query'])) ? htmlspecialchars($_POST['query']) : '' ?>">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
         </div><!-- End Search Bar -->
@@ -100,7 +100,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -221,7 +221,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
                                     $no = 1;
 
                                     // ambil keyword dari koneksi
-                                    $query = isset($_GET['query']) ? mysqli_real_escape_string($koneksi, $_GET['query']) : '';
+                                    $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
                                     
 
 
@@ -243,7 +243,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
                                             <tr>
                                                 <td><?php echo $no++; ?></td>
                                                 <td><?php echo $hasil['nm_produk']; ?></td>
-                                                <td>Rp <?php echo number_format($hasil['harga'], 0, ',', '.'); ?></td>
+                                                <td>Rp <?php echo number_format($hasil['harga'], 0, ',', '.'); ?>,00</td>
                                                 <td><?php echo $hasil ['stok']; ?></td>
                                                 <td><?php echo $hasil ['desk']; ?></td>
                                                 <td><?php echo $hasil ['nm_kategori']; ?></td>
@@ -272,11 +272,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
                                         </tr>
                                         <?php
                                     }
-                                    ?>
-
-
-
-                                            
+                                    ?>                                           
                                 </tbody>
                             </table>
                             <!-- End Table with stripped rows -->

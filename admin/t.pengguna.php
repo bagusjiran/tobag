@@ -121,7 +121,7 @@ if (isset($_POST['simpan'])) {
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -198,7 +198,7 @@ if (isset($_POST['simpan'])) {
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-                    <li class="breadcrumb-item">Pengguna</li>
+                    <li class="breadcrumb-item"><a href="pengguna.php">Pengguna</a></li>
                     <li class="breadcrumb-item active">Tambah</li>
                 </ol>
             </nav>

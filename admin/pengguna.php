@@ -65,8 +65,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
 
         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="">
-                <input type="text" name="query" placeholder="Search" title="Enter search 
-                keyword" value="<?php echo (isset($_POST['query'])) ? htmlspecialchars($_POST['query']) : '' ?>">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo (isset($_POST['query'])) ? htmlspecialchars($_POST['query']) : '' ?>">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
         </div><!-- End Search Bar -->
@@ -229,13 +228,13 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
 
                                     // tambahkan jika input tidak kosong
                                     if (!empty($query)) {
-                                        $sql_query .= " WHERE username LIKE '%$query%'";
+                                        $sql_query .= " AND username LIKE '%$query%'";
                                     }
 
-                                    $sql = mysqli_query($koneksi, $sql_query);
+                                    $sql_query = mysqli_query($koneksi, $sql_query);
 
-                                    if (mysqli_num_rows($sql) > 0) {
-                                        while ($hasil = mysqli_fetch_array($sql)) {
+                                    if (mysqli_num_rows($sql_query) > 0) {
+                                        while ($hasil = mysqli_fetch_array($sql_query)) {
                                     ?>        
                                             
                                             <tr>

@@ -189,7 +189,7 @@ if (isset($_POST['simpan'])) {
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-          <li class="breadcrumb-item">Kategori</li>
+          <li class="breadcrumb-item"><a href="kategori.php">Kategori</a></li>
           <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </nav>
