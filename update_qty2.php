@@ -4,14 +4,15 @@ include 'admin/koneksi.php';
 
 $response = ['success' => false];
 
-if (isset($_POST['id'])) {
-    $id_pesanan = $_POST['id'];
+if (isset($_POST['id_pesanan']) && isset($_POST['qty'])) {
+    $id_pesanan = $_POST['id_pesanan'];
+    $qty = (int)$_POST['qty'];
     $id_user = $_SESSION['id_user'];
 
-    // Delete the item from the cart
-    $query = mysqli_query($koneksi, "DELETE FROM tb_pesanan WHERE id_pesanan = '$id_pesanan' AND id_user = '$id_user'");
+    // Update quantity in the database
+    $query_update = mysqli_query($koneksi, "UPDATE tb_pesanan SET qty = '$qty' WHERE id_pesanan = '$id_pesanan' AND id_user = '$id_user'");
 
-    if ($query) {
+    if ($query_update) {
         // Recalculate totals
         $query_pesanan = mysqli_query($koneksi, "
             SELECT p.*, pr.harga 
@@ -25,6 +26,7 @@ if (isset($_POST['id'])) {
             $subtotal += $row['qty'] * $row['harga'];
         }
 
+        // Calculate discount
         $diskon = 0;
         if ($subtotal > 3000000) {
             $diskon = 0.07 * $subtotal;
