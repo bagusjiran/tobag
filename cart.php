@@ -283,7 +283,7 @@ if (isset($_POST['update_cart'])) {
                                                     <td class="quantity">
                                                         <label>Quantity</label>
                                                         <div class="cart-plus-minus">
-                                                            <input class="cart-plus-minus-box qty-input" name="qty[<?= $row['id_pesanan'] ?>]" value="<?= $row['qty'] ?>" type="number" min="1" data-id="<?= $row['id_pesanan'] ?>" read>
+                                                            <input class="cart-plus-minus-box qty-input" name="qty[<?= $row['id_pesanan'] ?>]" value="<?= $row['qty'] ?>" type="number" min="1" data-id="<?= $row['id_pesanan'] ?>">
                                                         </div>
                                                         <span class="loading">Memproses...</span>
                                                     </td>
