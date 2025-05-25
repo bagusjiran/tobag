@@ -15,11 +15,9 @@ if (isset($_POST['id'])) {
     $id_pesanan = mysqli_real_escape_string($koneksi, $_POST['id']);
     $id_user = mysqli_real_escape_string($koneksi, $_SESSION['id_user']);
 
-    // Delete the item from the cart
     $query = mysqli_query($koneksi, "DELETE FROM tb_pesanan WHERE id_pesanan = '$id_pesanan' AND id_user = '$id_user'");
 
     if ($query && mysqli_affected_rows($koneksi) > 0) {
-        // Recalculate totals
         $query_pesanan = mysqli_query($koneksi, "
             SELECT p.*, pr.harga 
             FROM tb_pesanan p

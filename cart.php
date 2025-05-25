@@ -11,7 +11,7 @@ $id_user = mysqli_real_escape_string($koneksi, $_SESSION['id_user']);
 
 // Ambil data keranjang
 $query_pesanan = mysqli_query($koneksi, "
-    SELECT p.*, pr.nm_produk, pr.gambar, pr.harga 
+    SELECT p.*, pr.nm_produk, pr.gambar, pr.harga, pr.stok 
     FROM tb_pesanan p
     JOIN tb_produk pr ON p.id_produk = pr.id_produk
     WHERE p.id_user = '$id_user'
@@ -41,39 +41,64 @@ if (isset($_POST['checkout'])) {
         exit;
     }
 
-    $result = mysqli_query($koneksi, "SELECT MAX(RIGHT(id_jual, 3)) AS max_id FROM tb_jual");
-    $row = mysqli_fetch_assoc($result);
-    $last_id = $row['max_id'];
-    $next_id = 'T' . str_pad((int)$last_id + 1, 3, '0', STR_PAD_LEFT);
+    // Mulai transaksi
+    mysqli_begin_transaction($koneksi);
 
-    $tgl = date('Y-m-d H:i:s');
-    $query_insert_jual = mysqli_query($koneksi, "INSERT INTO tb_jual (id_jual, id_user, tgl_jual, total, diskon) 
-        VALUES ('$next_id', '$id_user', '$tgl', '$total_bayar', '$diskon')");
-
-    if (!$query_insert_jual) {
-        echo "<script>alert('Gagal menyimpan data penjualan!'); window.location='cart.php';</script>";
-        exit;
-    }
-
-    foreach ($cart_items as $item) {
-        $total = $item['qty'] * $item['harga'];
-        $query_dtl = mysqli_query($koneksi, "INSERT INTO tb_jualdtl (id_jual, id_produk, qty, harga) 
-            VALUES ('$next_id', '{$item['id_produk']}', '{$item['qty']}', '$total')");
-
-        if (!$query_dtl) {
-            echo "<script>alert('Gagal menyimpan detail penjualan!'); window.location='cart.php';</script>";
-            exit;
+    try {
+        // Periksa stok untuk semua item
+        foreach ($cart_items as $item) {
+            if ($item['qty'] > $item['stok']) {
+                throw new Exception("Stok tidak mencukupi untuk produk: {$item['nm_produk']} (Tersedia: {$item['stok']}, Diminta: {$item['qty']})");
+            }
         }
-    }
 
-    $hapus = mysqli_query($koneksi, "DELETE FROM tb_pesanan WHERE id_user = '$id_user'");
-    if (!$hapus) {
-        echo "<script>alert('Gagal menghapus keranjang!'); window.location='cart.php';</script>";
+        // Generate ID penjualan
+        $result = mysqli_query($koneksi, "SELECT MAX(RIGHT(id_jual, 3)) AS max_id FROM tb_jual");
+        $row = mysqli_fetch_assoc($result);
+        $last_id = $row['max_id'];
+        $next_id = 'T' . str_pad((int)$last_id + 1, 3, '0', STR_PAD_LEFT);
+
+        $tgl = date('Y-m-d H:i:s');
+        $query_insert_jual = mysqli_query($koneksi, "INSERT INTO tb_jual (id_jual, id_user, tgl_jual, total, diskon) 
+            VALUES ('$next_id', '$id_user', '$tgl', '$total_bayar', '$diskon')");
+
+        if (!$query_insert_jual) {
+            throw new Exception('Gagal menyimpan data penjualan!');
+        }
+
+        // Simpan detail penjualan dan kurangi stok
+        foreach ($cart_items as $item) {
+            $total = $item['qty'] * $item['harga'];
+            $query_dtl = mysqli_query($koneksi, "INSERT INTO tb_jualdtl (id_jual, id_produk, qty, harga) 
+                VALUES ('$next_id', '{$item['id_produk']}', '{$item['qty']}', '$total')");
+
+            if (!$query_dtl) {
+                throw new Exception('Gagal menyimpan detail penjualan!');
+            }
+
+            // Kurangi stok produk
+            $query_update_stok = mysqli_query($koneksi, "UPDATE tb_produk SET stok = stok - {$item['qty']} WHERE id_produk = '{$item['id_produk']}'");
+            if (!$query_update_stok) {
+                throw new Exception('Gagal memperbarui stok produk!');
+            }
+        }
+
+        // Hapus pesanan dari keranjang
+        $hapus = mysqli_query($koneksi, "DELETE FROM tb_pesanan WHERE id_user = '$id_user'");
+        if (!$hapus) {
+            throw new Exception('Gagal menghapus keranjang!');
+        }
+
+        // Commit transaksi
+        mysqli_commit($koneksi);
+        echo "<script>alert('Checkout berhasil!'); window.location='cart.php';</script>";
+        exit;
+    } catch (Exception $e) {
+        // Rollback transaksi jika terjadi error
+        mysqli_rollback($koneksi);
+        echo "<script>alert('{$e->getMessage()}'); window.location='cart.php';</script>";
         exit;
     }
-
-    echo "<script>alert('Checkout berhasil!'); window.location='cart.php';</script>";
-    exit;
 }
 
 // Proses update cart
@@ -82,6 +107,19 @@ if (isset($_POST['update_cart'])) {
         $id_pesanan = mysqli_real_escape_string($koneksi, $id_pesanan);
         $new_qty = (int)$new_qty;
         if ($new_qty < 1) $new_qty = 1;
+
+        // Periksa stok produk
+        $query_check = mysqli_query($koneksi, "
+            SELECT pr.stok 
+            FROM tb_pesanan p
+            JOIN tb_produk pr ON p.id_produk = pr.id_produk
+            WHERE p.id_pesanan = '$id_pesanan' AND p.id_user = '$id_user'
+        ");
+        $row = mysqli_fetch_assoc($query_check);
+        if ($new_qty > $row['stok']) {
+            echo "<script>alert('Stok tidak mencukupi untuk pesanan ini!'); window.location='cart.php';</script>";
+            exit;
+        }
 
         $query_update = mysqli_query($koneksi, "UPDATE tb_pesanan SET qty = '$new_qty' WHERE id_pesanan = '$id_pesanan' AND id_user = '$id_user'");
         if (!$query_update) {

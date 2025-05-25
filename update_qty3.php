@@ -20,27 +20,6 @@ if (isset($_POST['id_pesanan']) && isset($_POST['qty'])) {
         $qty = 1;
     }
 
-    // Periksa stok produk
-    $query_check = mysqli_query($koneksi, "
-        SELECT pr.stok, pr.nm_produk 
-        FROM tb_pesanan p
-        JOIN tb_produk pr ON p.id_produk = pr.id_produk
-        WHERE p.id_pesanan = '$id_pesanan' AND p.id_user = '$id_user'
-    ");
-    $row = mysqli_fetch_assoc($query_check);
-    if (!$row) {
-        $response['message'] = 'Pesanan tidak ditemukan';
-        header('Content-Type: application/json');
-        echo json_encode($response);
-        exit;
-    }
-    if ($qty > $row['stok']) {
-        $response['message'] = "Stok tidak mencukupi untuk produk: {$row['nm_produk']} (Tersedia: {$row['stok']}, Diminta: $qty)";
-        header('Content-Type: application/json');
-        echo json_encode($response);
-        exit;
-    }
-
     $query_update = mysqli_query($koneksi, "UPDATE tb_pesanan SET qty = '$qty' WHERE id_pesanan = '$id_pesanan' AND id_user = '$id_user'");
 
     if ($query_update && mysqli_affected_rows($koneksi) > 0) {
