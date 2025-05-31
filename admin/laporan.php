@@ -25,7 +25,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pengguna - ToBag Admin</title>
+    <title>Laporan - ToBag Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -48,6 +48,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -63,36 +64,18 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo (isset($_POST['query'])) ? htmlspecialchars($_POST['query']) : '' ?>">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-        </div><!-- End Search Bar -->
-
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
-
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle " href="#">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </li><!-- End Search Icon-->
-
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/assets/img/apple-touch-icon.png" alt="Profile" class="rounded-circle">
-                        <!-- profile-img.jpg diganti dengan foto kalian -->
+                        <img src="assets/img/apple-touch-icon.png" alt="Profile" class="rounded-circle">
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest '; ?></h6>
-                            <span>Administator</span>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
+                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
+                            <span>Admin</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -113,6 +96,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
 
     </header><!-- End Header -->
 
+    <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
@@ -122,13 +106,14 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
                     <i class="bi bi-house-door"></i>
                     <span>Beranda</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+            </li><!-- End Beranda Nav -->
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="kategori.php">
                     <i class="bi bi-tags"></i>
                     <span>Kategori</span>
                 </a>
-            </li><!-- End Kategori Page Nav -->
+            </li><!-- End Kategori Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="produk.php">
@@ -138,7 +123,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
             </li><!-- End Produk Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link" href="keranjang.php">
+                <a class="nav-link collapsed" href="keranjang.php">
                     <i class="bi bi-cart"></i>
                     <span>Keranjang</span>
                 </a>
@@ -152,18 +137,17 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
             </li><!-- End Transaksi Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="laporan.php">
+                <a class="nav-link" href="laporan.php">
                     <i class="bi bi-box-arrow-in-right"></i>
                     <span>Laporan</span>
                 </a>
             </li><!-- End Laporan Page Nav -->
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pengguna.php">
                     <i class="bi bi-person-circle"></i>
                     <span>Pengguna</span>
                 </a>
-            </li><!-- End pengguna Page Nav -->
+            </li><!-- End Pengguna Page Nav -->
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -171,101 +155,122 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Pengguna</h1>
+            <h1>Laporan</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-                    <li class="breadcrumb-item active">Pengguna</li>
+                    <li class="breadcrumb-item active">Laporan</li>
                 </ol>
             </nav>
-        </div><!-- End Page Title -->
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <a href="t.pengguna.php" class="btn btn-primary mt-3">
-                            <i class="bi bi-plus-lg"></i> Tambah Data
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
+        <!-- End Page Title -->
+
+        <?php
+        include "koneksi.php";
+
+        if ($koneksi->connect_error) {
+            die("Koneksi gagal: " . $koneksi->connect_error);
+        }
+
+        $sqlKategori = "SELECT id_kategori, nm_kategori FROM tb_kategori";
+        $resultKategori = $koneksi->query($sqlKategori);
+
+        $sqlTransaksi = "SELECT COUNT(*) as total FROM tb_jual";
+        $resultTransaksi = $koneksi->query($sqlTransaksi);
+        $dataTransaksi = $resultTransaksi->fetch_assoc();
+        $adaTransaksi = ($dataTransaksi['total'] > 0);
+
+        $koneksi->close();
+        ?>
 
         <section class="section">
             <div class="row">
-
-                <div class="col-lg-12">
-
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">Cetak Laporan</h5>
 
-                            <!-- Table with stripped rows -->
-                            <table class="table table-striped mt-2">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Nama Pengguna</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include 'koneksi.php';
-                                    $no = 1;
+                            <!-- Pilih Laporan -->
+                            <div class="mb-3">
+                                <label class="form-label">Pilih Laporan</label>
+                                <select id="laporanSelect" class="form-select" onchange="updateTipeLaporan()">
+                                    <option value="" selected disabled>Pilih Laporan</option>
+                                    <option value="produk">Produk</option>
+                                    <option value="transaksi">Transaksi</option>
+                                </select>
+                            </div>
 
-                                    // cek apakah ada input pencarian
-                                    $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
+                            <!-- Pilih Tipe Laporan -->
+                            <div class="mb-3">
+                                <label class="form-label">Pilih Tipe Laporan</label>
+                                <select id="tipeLaporanSelect" class="form-select">
+                                    <option value="" selected disabled>Pilih Tipe Laporan</option>
+                                </select>
+                            </div>
 
-                                    // query dasar
-                                    $sql_query = "SELECT id_user, username, status FROM tb_user WHERE status != 'superuser'";
-
-                                    if (!empty($query)) {
-                                    $sql_query .= " AND username LIKE '%$query%'";
-                                   }
-
-
-                                    // tambahkan jika input tidak kosong
-                                    if (!empty($query)) {
-                                        $sql_query .= " AND username LIKE '%$query%'";
-                                    }
-
-                                    $sql_query = mysqli_query($koneksi, $sql_query);
-
-                                    if (mysqli_num_rows($sql_query) > 0) {
-                                        while ($hasil = mysqli_fetch_array($sql_query)) {
-                                    ?>        
-                                            
-                                            <tr>
-                                                <td> <?php echo $no++; ?></td>
-                                                <td> <?php echo $hasil['username']; ?></td>
-                                                <td> <?php echo $hasil['status']; ?></td>
-                                                <td>
-                                                    <a href="h.pengguna.php?id=<?php echo $hasil['id_user']; ?>"
-                                                        class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="bi bi-trash"></i></a>
-                                                    
-                                                    </a>
-                                                </td>
-                                            
-                                            </tr>
-                                    <?php
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='4' class='text-center'>Tidak ada data ditemukan</td></tr>";
-                                    }
-
-                                    ?>
-
-                                </tbody>
-                            </table>
-                            <!-- End Table with stripped rows -->
-
+                            <button id="btnCetak" class="btn btn-primary">Cetak PDF</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <script>
+            function updateTipeLaporan() {
+                const laporanSelect = document.getElementById("laporanSelect").value;
+                const tipeLaporanSelect = document.getElementById("tipeLaporanSelect");
+
+                tipeLaporanSelect.innerHTML = "";
+
+                if (laporanSelect === "produk") {
+                    let optionAll = document.createElement("option");
+                    optionAll.value = "all";
+                    optionAll.textContent = "All";
+                    tipeLaporanSelect.appendChild(optionAll);
+
+                    <?php if ($resultKategori->num_rows > 0) : ?>
+                        <?php while ($row = $resultKategori->fetch_assoc()) : ?>
+                            let option<?php echo $row['id_kategori']; ?> = document.createElement("option");
+                            option<?php echo $row['id_kategori']; ?>.value = "<?php echo $row['id_kategori']; ?>";
+                            option<?php echo $row['id_kategori']; ?>.textContent = "<?php echo $row['nm_kategori']; ?>";
+                            tipeLaporanSelect.appendChild(option<?php echo $row['id_kategori']; ?>);
+                        <?php endwhile; ?>
+                    <?php endif; ?>
+
+                } else if (laporanSelect === "transaksi") {
+                    let optionAll = document.createElement("option");
+                    optionAll.value = "all";
+                    optionAll.textContent = "All";
+                    tipeLaporanSelect.appendChild(optionAll);
+                }
+            }
+
+            document.getElementById("btnCetak").addEventListener("click", function() {
+                const laporan = document.getElementById("laporanSelect").value;
+                const tipe = document.getElementById("tipeLaporanSelect").value;
+
+                if (!laporan || !tipe) {
+                    alert("Silakan pilih jenis laporan dan tipe laporan terlebih dahulu.");
+                    return;
+                }
+
+                let url = "";
+
+                if (laporan === "produk") {
+                    if (tipe === "all") {
+                        url = "pdf_produk_all.php";
+                    } else {
+                        url = "pdf_produk_kategori.php?id_kategori=" + tipe;
+                    }
+                } else if (laporan === "transaksi") {
+                    url = "pdf_transaksi.php";
+                }
+
+                // Buka file PDF di tab baru
+                window.open(url, "_blank");
+            });
+        </script>
+
 
     </main><!-- End #main -->
 
@@ -275,7 +280,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
             &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="https://instagram.com/namaig/">Nama Anda</a>
+            Designed by <a href="https://wa.me/628232238082" target="_blank">Smart People</a>
         </div>
     </footer><!-- End Footer -->
 

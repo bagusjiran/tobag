@@ -25,7 +25,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pengguna - ToBag Admin</title>
+    <title>Transaksi - ToBag Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -48,6 +48,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -63,36 +64,18 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo (isset($_POST['query'])) ? htmlspecialchars($_POST['query']) : '' ?>">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-        </div><!-- End Search Bar -->
-
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
-
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle " href="#">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </li><!-- End Search Icon-->
-
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/assets/img/apple-touch-icon.png" alt="Profile" class="rounded-circle">
-                        <!-- profile-img.jpg diganti dengan foto kalian -->
+                        <img src="assets/img/apple-touch-icon.png" alt="Profile" class="rounded-circle">
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest '; ?></h6>
-                            <span>Administator</span>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
+                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
+                            <span>Admin</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -113,6 +96,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
 
     </header><!-- End Header -->
 
+    <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
@@ -122,13 +106,14 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
                     <i class="bi bi-house-door"></i>
                     <span>Beranda</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+            </li><!-- End Beranda Nav -->
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="kategori.php">
                     <i class="bi bi-tags"></i>
                     <span>Kategori</span>
                 </a>
-            </li><!-- End Kategori Page Nav -->
+            </li><!-- End Kategori Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="produk.php">
@@ -138,14 +123,14 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
             </li><!-- End Produk Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link" href="keranjang.php">
+                <a class="nav-link collapsed" href="keranjang.php">
                     <i class="bi bi-cart"></i>
                     <span>Keranjang</span>
                 </a>
             </li><!-- End Keranjang Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="transaksi.php">
+                <a class="nav-link " href="transaksi.php">
                     <i class="bi bi-card-list"></i>
                     <span>Transaksi</span>
                 </a>
@@ -157,13 +142,12 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
                     <span>Laporan</span>
                 </a>
             </li><!-- End Laporan Page Nav -->
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pengguna.php">
                     <i class="bi bi-person-circle"></i>
                     <span>Pengguna</span>
                 </a>
-            </li><!-- End pengguna Page Nav -->
+            </li><!-- End Pengguna Page Nav -->
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -171,22 +155,63 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Pengguna</h1>
+            <h1>Transaksi</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-                    <li class="breadcrumb-item active">Pengguna</li>
+                    <li class="breadcrumb-item active">Transaksi</li>
                 </ol>
             </nav>
-        </div><!-- End Page Title -->
+        </div>
+        <!-- End Page Title -->
+
+        <?php
+        // Sertakan file koneksi
+        include 'koneksi.php';
+
+        // Ambil kategori dari database untuk dropdown filter
+        $sql_kategori = "SELECT id_kategori, nm_kategori FROM tb_kategori";
+        $result_kategori = $koneksi->query($sql_kategori);
+
+        // Ambil kategori yang dipilih dari URL (jika ada)
+        $kategori_filter = isset($_GET['kategori']) ? $_GET['kategori'] : "";
+
+        // Query untuk mengambil data penjualan dengan filter kategori jika ada
+        $sql = "SELECT j.id_jual, u.username, j.tgl_jual, j.total, j.diskon 
+        FROM tb_jual j 
+        JOIN tb_user u ON j.id_user = u.id_user";
+
+        if (!empty($kategori_filter)) {
+            // Jika kategori dipilih, filter berdasarkan kategori yang terkait dengan produk dalam tb_jualdtl
+            $sql .= " JOIN tb_jualdtl jd ON j.id_jual = jd.id_jual
+              JOIN tb_produk p ON jd.id_produk = p.id_produk
+              WHERE p.id_kategori = '$kategori_filter'";
+        }
+
+        $sql .= " GROUP BY j.id_jual ORDER BY j.tgl_jual ASC"; // Mengelompokkan dan mengurutkan berdasarkan tanggal terbaru
+        $result = $koneksi->query($sql);
+        ?>
 
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="t.pengguna.php" class="btn btn-primary mt-3">
-                            <i class="bi bi-plus-lg"></i> Tambah Data
-                        </a>
+                        <div class="filter-bar mt-3">
+                            <form class="filter-form d-flex align-items-center" method="GET" action="">
+                                <select name="kategori" class="form-select me-2" style="max-width: 200px;" title="Pilih kategori">
+                                    <option value="">-- Semua Kategori --</option>
+                                    <?php
+                                    if ($result_kategori->num_rows > 0) {
+                                        while ($row = $result_kategori->fetch_assoc()) {
+                                            $selected = ($kategori_filter == $row['id_kategori']) ? "selected" : "";
+                                            echo "<option value='" . $row['id_kategori'] . "' $selected>" . htmlspecialchars($row['nm_kategori']) . "</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                                <button type="submit" class="btn btn-primary ms-2">Filter</button>
+                            </form>
+                        </div><!-- End Filter Bar -->
                     </div>
                 </div>
             </div>
@@ -194,73 +219,44 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
 
         <section class="section">
             <div class="row">
-
                 <div class="col-lg-12">
-
                     <div class="card">
                         <div class="card-body">
-
-                            <!-- Table with stripped rows -->
                             <table class="table table-striped mt-2">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Nama Pengguna</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Aksi</th>
+                                        <th>No</th>
+                                        <th>Kode Belanja</th>
+                                        <th>Pengguna</th>
+                                        <th>Tanggal</th>
+                                        <th>Total Bayar</th>
+                                        <th>Diskon</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    include 'koneksi.php';
                                     $no = 1;
-
-                                    // cek apakah ada input pencarian
-                                    $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
-
-                                    // query dasar
-                                    $sql_query = "SELECT id_user, username, status FROM tb_user WHERE status != 'superuser'";
-
-                                    if (!empty($query)) {
-                                    $sql_query .= " AND username LIKE '%$query%'";
-                                   }
-
-
-                                    // tambahkan jika input tidak kosong
-                                    if (!empty($query)) {
-                                        $sql_query .= " AND username LIKE '%$query%'";
-                                    }
-
-                                    $sql_query = mysqli_query($koneksi, $sql_query);
-
-                                    if (mysqli_num_rows($sql_query) > 0) {
-                                        while ($hasil = mysqli_fetch_array($sql_query)) {
-                                    ?>        
-                                            
-                                            <tr>
-                                                <td> <?php echo $no++; ?></td>
-                                                <td> <?php echo $hasil['username']; ?></td>
-                                                <td> <?php echo $hasil['status']; ?></td>
-                                                <td>
-                                                    <a href="h.pengguna.php?id=<?php echo $hasil['id_user']; ?>"
-                                                        class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="bi bi-trash"></i></a>
-                                                    
-                                                    </a>
-                                                </td>
-                                            
-                                            </tr>
-                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>";
+                                            echo "<td>" . $no++ . "</td>";
+                                            echo "<td>" . $row["id_jual"] . "</td>";
+                                            echo "<td>" . $row["username"] . "</td>";
+                                            echo "<td>" . date("d-m-Y H:i:s", strtotime($row["tgl_jual"])) . "</td>";
+                                            echo "<td>Rp " . number_format($row["total"], 0, ",", ".") . "</td>";
+                                            echo "<td>Rp " . number_format($row["diskon"], 0, ",", ".") . "</td>";
+                                            echo "<td>
+                                            <a href='detail_jual.php?id=" . $row["id_jual"] . "' class='btn btn-info btn-sm'>Detail</a>
+                                          </td>";
+                                            echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='4' class='text-center'>Tidak ada data ditemukan</td></tr>";
+                                        echo "<tr><td colspan='7' class='text-center'>Belum ada data penjualan</td></tr>";
                                     }
-
                                     ?>
-
                                 </tbody>
                             </table>
-                            <!-- End Table with stripped rows -->
-
                         </div>
                     </div>
                 </div>
@@ -275,7 +271,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
             &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="https://instagram.com/namaig/">Nama Anda</a>
+            Designed by <a href="https://wa.me/628232238082" target="_blank">Smart People</a>
         </div>
     </footer><!-- End Footer -->
 

@@ -210,11 +210,11 @@ if (isset($_POST['update_cart'])) {
                                                 <ul class="minicart-product-list">
                                                     <?php foreach ($cart_items as $item) { ?>
                                                         <li>
-                                                            <a href="single-product.php?id=<?= $item['id_produk'] ?>" class="minicart-product-image">
+                                                            <a href="detail_produk.php?id=<?= $item['id_produk'] ?>" class="minicart-product-image">
                                                                 <img src="admin/produk_img/<?= $item['gambar'] ?>" alt="<?= htmlspecialchars($item['nm_produk']) ?>">
                                                             </a>
                                                             <div class="minicart-product-details">
-                                                                <h6><a href="single-product.php?id=<?= $item['id_produk'] ?>"><?= htmlspecialchars($item['nm_produk']) ?></a></h6>
+                                                                <h6><a href="detail_produk.php?id=<?= $item['id_produk'] ?>"><?= htmlspecialchars($item['nm_produk']) ?></a></h6>
                                                                 <span>Rp <?= number_format($item['harga'] * $item['qty'], 0, ',', '.') ?> x <?= $item['qty'] ?></span>
                                                             </div>
                                                             <button class="close delete-item" data-id="<?= $item['id_pesanan'] ?>">
@@ -308,12 +308,12 @@ if (isset($_POST['update_cart'])) {
                                                         </button>
                                                     </td>
                                                     <td class="li-product-thumbnail">
-                                                        <a href="single-product.php?id=<?= $row['id_produk'] ?>">
+                                                        <a href="detail_produk.php?id=<?= $row['id_produk'] ?>">
                                                             <img src="admin/produk_img/<?= $row['gambar'] ?>" alt="<?= htmlspecialchars($row['nm_produk']) ?>" width="70">
                                                         </a>
                                                     </td>
                                                     <td class="li-product-name">
-                                                        <a href="single-product.php?id=<?= $row['id_produk'] ?>"><?= htmlspecialchars($row['nm_produk']) ?></a>
+                                                        <a href="detail_produk.php?id=<?= $row['id_produk'] ?>"><?= htmlspecialchars($row['nm_produk']) ?></a>
                                                     </td>
                                                     <td class="li-product-price">
                                                         <span class="amount">Rp <?= number_format($row['harga'], 0, ',', '.') ?></span>
