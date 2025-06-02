@@ -59,7 +59,7 @@ $html = '<html>
 </head>
 <body>
 
-<h1 align="center">Technozone</h1>
+<h1 align="center">ToBag</h1>
 <hr>
 <h1 align="center">LAPORAN TRANSAKSI PENJUALAN</h1>
 
