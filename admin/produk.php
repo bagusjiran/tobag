@@ -291,7 +291,7 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin" && $_SESSION[
             &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="https://wa.me/6282322238082">Bagus Jiran</a>
+            Designed by <a href="https://wa.me/6282322238082">Smart People</a>
         </div>
     </footer><!-- End Footer -->
 

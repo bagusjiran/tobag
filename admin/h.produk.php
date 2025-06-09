@@ -1,6 +1,8 @@
 <?php
 include 'koneksi.php';
 
+$dir = __DIR__ . '/produk_img/';
+
 if (isset($_GET['id'])) {
     $id_produk = $_GET['id'];
     $query = mysqli_query($koneksi, "SELECT * FROM tb_produk WHERE id_produk='$id_produk'");
@@ -29,3 +31,4 @@ if (isset($_GET['id'])) {
     header("refresh:0; produk.php");
 }
 ?>
+

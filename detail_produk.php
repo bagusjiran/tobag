@@ -232,7 +232,6 @@ if (!isset($_SESSION['id_user'])) {
                                     <span class="new-price new-price-2">Rp<?= number_format($data['harga'], 0, ',', '.') ?></span>
                                 </div>
                                 <div class="product-desc">
-                                    <p><span><?= nl2br($data['desk']) ?></span></p>
                                     <p><strong>Stok tersedia:</strong> <?= $data['stok'] ?> unit</p>
                                 </div>
                                 <div class="single-add-to-cart">
@@ -267,6 +266,29 @@ if (!isset($_SESSION['id_user'])) {
                 </div>
             </div>
         </div>
+                <!-- Begin Product Area -->
+        <div class="product-area pt-35">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="li-product-tab">
+                            <ul class="nav li-product-menu">
+                                <li><a class="active" data-toggle="tab" href="#description"><span>Deskripsi</span></a></li>
+                            </ul>
+                        </div>
+                        <!-- Begin Li's Tab Menu Content Area -->
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div id="description" class="tab-pane active show" role="tabpanel">
+                        <div class="product-description">
+                            <span><?= nl2br($data['desk']) ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Product Area End Here -->
         <section class="product-area li-laptop-product pt-30 pb-50">
             <div class="container">
                 <div class="row">
@@ -400,36 +422,16 @@ if (!isset($_SESSION['id_user'])) {
                                 <div class="footer-block">
                                     <h3 class="footer-block-title">Ikuti Kami</h3>
                                     <ul class="social-link">
-                                        <li class="twitter">
-                                            <a href="https://twitter.com/" data-toggle="tooltip" target="_blank" title="Twitter">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li class="rss">
-                                            <a href="https://rss.com/" data-toggle="tooltip" target="_blank" title="RSS">
-                                                <i class="fa fa-rss"></i>
-                                            </a>
-                                        </li>
-                                        <li class="google-plus">
-                                            <a href="https://www.plus.google.com/discover" data-toggle="tooltip" target="_blank" title="Google +">
-                                                <i class="fa fa-google-plus"></i>
-                                            </a>
-                                        </li>
-                                        <li class="facebook">
-                                            <a href="https://www.facebook.com/" data-toggle="tooltip" target="_blank" title="Facebook">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li class="youtube">
-                                            <a href="https://www.youtube.com/" data-toggle="tooltip" target="_blank" title="Youtube">
-                                                <i class="fa fa-youtube"></i>
-                                            </a>
-                                        </li>
-                                        <li class="instagram">
-                                            <a href="https://www.instagram.com/" data-toggle="tooltip" target="_blank" title="Instagram">
-                                                <i class="fa fa-instagram"></i>
-                                            </a>
-                                        </li>
+                                            <li class="twitter">
+                                                <a href="https://x.com/BagusJiran694" data-toggle="tooltip" target="_blank" title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="youtube">
+                                                <a href="https://www.youtube.com/@bagusjiranriskohar" data-toggle="tooltip" target="_blank" title="Youtube">
+                                                    <i class="fa fa-youtube"></i>
+                                                </a>
+                                            </li>
                                     </ul>
                                 </div>
                             </div>

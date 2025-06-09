@@ -308,10 +308,13 @@ if (isset($_POST['update_cart'])) {
                     </div>
                 </div>
             </div>
+            <!-- Header Middle Area End Here -->
+            <!-- Begin Header Bottom Area -->
             <div class="header-bottom header-sticky stick d-none d-lg-block d-xl-block">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
+                            <!-- Begin Header Bottom Menu Area -->
                             <div class="hb-menu">
                                 <nav>
                                     <ul>
@@ -321,260 +324,102 @@ if (isset($_POST['update_cart'])) {
                                     </ul>
                                 </nav>
                             </div>
+                            <!-- Header Bottom Menu Area End Here -->
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="mobile-menu-area d-lg-none d-xl-none col-12">
+            <!-- Header Bottom Area End Here -->
+            <!-- Begin Mobile Menu Area -->
+            <div class="mobile-menu-area mobile-menu-area-4 d-lg-none d-xl-none col-12">
                 <div class="container">
                     <div class="row">
-                        <div class="mobile-menu"></div>
+                        <div class="mobile-menu">
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- Mobile Menu Area End Here -->
         </header>
+        <!-- Header Area End Here -->
+        <!-- Begin Li's Breadcrumb Area -->
         <div class="breadcrumb-area">
             <div class="container">
                 <div class="breadcrumb-content">
                     <ul>
                         <li><a href="index.php">Beranda</a></li>
-                        <li class="active">Belanja</li>
+                        <li class="active">Hubungi Kami</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="content-wraper pt-60 pb-60">
+        <!-- Li's Breadcrumb Area End Here -->
+        <!-- Begin Contact Main Page Area -->
+        <div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
+            <div class="container mb-60">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.973730217066!2d111.58744367424643!3d-7.129035169917676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e776411abeabb93%3A0x3ccba806cf9ef497!2sSekolah%20Tinggi%20Teknologi%20Ronggolawe!5e0!3m2!1sen!2sid!4v1746959940264!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-9 order-1 order-lg-2">
-                        <div class="single-banner shop-page-banner">
-                            <a href="#">
-                                <img src="images/bg-banner/accer.png" alt="Li's Static Banner" height="350">
-                            </a>
-                        </div>
-                        <div class="shop-top-bar mt-30">
-                            <div class="shop-bar-inner">
-                                <div class="product-view-mode">
-                                    <ul class="nav shop-item-filter-list" role="tablist">
-                                        <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="grid-view" href="#grid-view"><i class="fa fa-th"></i></a></li>
-                                        <li class="active" role="presentation"><a aria-selected="true" class="active show" data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i class="fa fa-th-list"></i></a></li>
-                                    </ul>
-                                </div>
-                                <?php
-                                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                                $limit = 12;
-                                $offset = ($page - 1) * $limit;
-                                $start = $offset + 1;
-                                $countSql = "SELECT COUNT(*) AS total FROM tb_produk p JOIN tb_kategori k ON p.id_kategori = k.id_kategori WHERE 1=1";
-                                $countQuery = mysqli_query($koneksi, $countSql);
-                                $totalData = mysqli_fetch_assoc($countQuery)['total'];
-                                $end = min($offset + $limit, $totalData);
-                                ?>
-                                <span class="mt-1">Menampilkan <?= $start ?> hingga <?= $end ?> dari <?= $totalData ?> produk</span>
+                    <div class="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
+                        <div class="contact-page-side-content">
+                            <h3 class="contact-page-title">Technozone</h3>
+                            <p class="contact-page-message mb-25">
+                                Technozone adalah toko online yang menyediakan berbagai produk elektronik berkualitas seperti smartphone, tablet, laptop, dan aksesori lainnya dengan harga terbaik.
+                            </p>
+                            <div class="single-contact-block">
+                                <h4><i class="fa fa-map-marker"></i> Alamat</h4>
+                                <p>Jl. Teknologi No. 88, Jakarta Selatan, DKI Jakarta 12345, Indonesia</p>
                             </div>
-                        </div>
-                        <div class="shop-products-wrapper">
-                            <div class="tab-content">
-                                <div id="grid-view" class="tab-pane fade" role="tabpanel">
-                                    <div class="product-area shop-product-area">
-                                        <div class="row">
-                                            <?php
-                                            include 'admin/koneksi.php';
-                                            $kategori = isset($_GET['kategori']) ? $_GET['kategori'] : '';
-                                            $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
-                                            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                                            $limit = 12;
-                                            $offset = ($page - 1) * $limit;
-                                            $sort = isset($_GET['sort']) ? $_GET['sort'] : 'default';
-                                            switch ($sort) {
-                                                case 'name-asc':
-                                                    $orderBy = 'ORDER BY p.nm_produk ASC';
-                                                    break;
-                                                case 'name-desc':
-                                                    $orderBy = 'ORDER BY p.nm_produk DESC';
-                                                    break;
-                                                case 'price-asc':
-                                                    $orderBy = 'ORDER BY p.harga ASC';
-                                                    break;
-                                                case 'price-desc':
-                                                    $orderBy = 'ORDER BY p.harga DESC';
-                                                    break;
-                                                default:
-                                                    $orderBy = 'ORDER BY p.id_produk DESC';
-                                                    break;
-                                            }
-                                            $countSql = "SELECT COUNT(*) AS total FROM tb_produk p JOIN tb_kategori k ON p.id_kategori = k.id_kategori WHERE 1=1";
-                                            if (!empty($kategori)) {
-                                                $countSql .= " AND p.id_kategori = '" . mysqli_real_escape_string($koneksi, $kategori) . "'";
-                                            }
-                                            if (!empty($keyword)) {
-                                                $countSql .= " AND p.nm_produk LIKE '%" . mysqli_real_escape_string($koneksi, $keyword) . "%'";
-                                            }
-                                            $countQuery = mysqli_query($koneksi, $countSql);
-                                            $totalData = mysqli_fetch_assoc($countQuery)['total'];
-                                            $totalPages = ceil($totalData / $limit);
-                                            $sql = "SELECT p.*, k.nm_kategori FROM tb_produk p JOIN tb_kategori k ON p.id_kategori = k.id_kategori WHERE 1=1";
-                                            if (!empty($kategori)) {
-                                                $sql .= " AND p.id_kategori = '" . mysqli_real_escape_string($koneksi, $kategori) . "'";
-                                            }
-                                            if (!empty($keyword)) {
-                                                $sql .= " AND p.nm_produk LIKE '%" . mysqli_real_escape_string($koneksi, $keyword) . "%'";
-                                            }
-                                            $sql .= " $orderBy LIMIT $limit OFFSET $offset";
-                                            $query = mysqli_query($koneksi, $sql);
-                                            while ($data = mysqli_fetch_assoc($query)) {
-                                            ?>
-                                                <div class="col-lg-4 col-md-4 col-sm-6 mt-40">
-                                                    <div class="single-product-wrap">
-                                                        <div class="product-image">
-                                                            <a href="detail_produk.php?id=<?= $data['id_produk']; ?>">
-                                                                <img src="admin/produk_img/<?= $data['gambar']; ?>" alt="<?= $data['nm_produk']; ?>" width="300" height="300">
-                                                            </a>
-                                                        </div>
-                                                        <div class="product_desc">
-                                                            <div class="product_desc_info">
-                                                                <div class="product-review">
-                                                                    <h5 class="manufacturer">
-                                                                        <a href="#"><?= $data['nm_kategori']; ?></a>
-                                                                    </h5>
-                                                                </div>
-                                                                <h4>
-                                                                    <a class="product_name" href="detail_produk.php?id=<?= $data['id_produk']; ?>">
-                                                                        <?= $data['nm_produk']; ?>
-                                                                    </a>
-                                                                </h4>
-                                                                <div class="price-box">
-                                                                    <span class="new-price">Rp<?= number_format($data['harga'], 0, ',', '.'); ?></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="add-actions">
-                                                                <ul class="add-actions-link">
-                                                                    <li class="add-cart active">
-                                                                        <a href="detail_produk.php?id=<?= $data['id_produk']; ?>">Beli Sekarang</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#" class="quick-view" data-toggle="modal" data-target="#exampleModalCenter" data-id="<?= $data['id_produk']; ?>">
-                                                                            <i class="fa fa-eye"></i>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="list-view" class="tab-pane fade product-list-view active show" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col">
-                                            <?php
-                                            $query = mysqli_query($koneksi, $sql);
-                                            while ($data = mysqli_fetch_assoc($query)) {
-                                            ?>
-                                                <div class="row product-layout-list">
-                                                    <div class="col-lg-3 col-md-5">
-                                                        <div class="product-image">
-                                                            <a href="detail_produk.php?id=<?= $data['id_produk']; ?>">
-                                                                <img src="admin/produk_img/<?= $data['gambar']; ?>" alt="<?= $data['nm_produk']; ?>" width="300" height="300">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-7">
-                                                        <div class="product_desc">
-                                                            <div class="product_desc_info">
-                                                                <div class="product-review">
-                                                                    <h5 class="manufacturer">
-                                                                        <a href="#"><?= $data['nm_kategori']; ?></a>
-                                                                    </h5>
-                                                                </div>
-                                                                <h4><a class="product_name" href="detail_produk.php?id=<?= $data['id_produk']; ?>">
-                                                                        <?= $data['nm_produk']; ?>
-                                                                    </a></h4>
-                                                                <div class="price-box">
-                                                                    <span class="new-price">Rp<?= number_format($data['harga'], 0, ',', '.'); ?></span>
-                                                                </div>
-                                                                <p><?= substr($data['desk'], 0, 150); ?>...</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="shop-add-action mb-xs-30">
-                                                            <ul class="add-actions-link">
-                                                                <li class="add-cart">
-                                                                    <a href="detail_produk.php?id=<?= $data['id_produk']; ?>">Beli Sekarang</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#" class="quick-view" data-toggle="modal" data-target="#exampleModalCenter" data-id="<?= $data['id_produk']; ?>">
-                                                                        <i class="fa fa-eye"></i>Lihat Cepat
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="paginatoin-area">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6">
-                                            <p>Menampilkan <?= min($limit, $totalData - $offset) ?> dari <?= $totalData ?> produk</p>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <ul class="pagination-box">
-                                                <?php if ($page > 1) : ?>
-                                                    <li><a href="?page=<?= $page - 1 ?>&kategori=<?= $kategori ?>&keyword=<?= $keyword ?>" class="Previous"><i class="fa fa-chevron-left"></i> Sebelumnya</a></li>
-                                                <?php endif; ?>
-                                                <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                                                    <li class="<?= ($i == $page) ? 'active' : '' ?>">
-                                                        <a href="?page=<?= $i ?>&kategori=<?= $kategori ?>&keyword=<?= $keyword ?>"><?= $i ?></a>
-                                                    </li>
-                                                <?php endfor; ?>
-                                                <?php if ($page < $totalPages) : ?>
-                                                    <li><a href="?page=<?= $page + 1 ?>&kategori=<?= $kategori ?>&keyword=<?= $keyword ?>" class="Next">Berikutnya <i class="fa fa-chevron-right"></i></a></li>
-                                                <?php endif; ?>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="single-contact-block">
+                                <h4><i class="fa fa-phone"></i> Telepon</h4>
+                                <p><a href="tel:+6281234567890">(+62) 812 3456 7890</a></p>
+                            </div>
+                            <div class="single-contact-block last-child">
+                                <h4><i class="fa fa-envelope-o"></i> Email</h4>
+                                <p><a href="mailto:info@technozone.id">info@technozone.id</a></p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 order-2 order-lg-1">
-                        <div class="sidebar-categores-box">
-                            <div class="sidebar-title">
-                                <h2>Filter</h2>
+
+                    <div class="col-lg-6 col-md-12 order-2 order-lg-1">
+                        <div class="contact-form-content pt-sm-55 pt-xs-55">
+                            <h3 class="contact-page-title">Kirimkan Pesan Anda</h3>
+                            <div class="contact-form">
+                                <form id="contact-form" action="http://demo.hasthemes.com/limupa-v3/limupa/mail.php" method="post">
+                                    <div class="form-group">
+                                        <label>Nama Anda <span class="required">*</span></label>
+                                        <input type="text" name="customerName" id="customername" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email Anda <span class="required">*</span></label>
+                                        <input type="email" name="customerEmail" id="customerEmail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Subjek</label>
+                                        <input type="text" name="contactSubject" id="contactSubject">
+                                    </div>
+                                    <div class="form-group mb-30">
+                                        <label>Pesan Anda</label>
+                                        <textarea name="contactMessage" id="contactMessage"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" value="submit" id="submit" class="li-btn-3" name="submit">Kirim</button>
+                                    </div>
+                                </form>
                             </div>
-                            <button class="btn-clear-all mb-sm-30 mb-xs-30" onclick="window.location.href='<?= basename($_SERVER['PHP_SELF']) ?>'">Clear all</button>
-                            <div class="filter-sub-area pt-sm-10 pt-xs-10">
-                                <h5 class="filter-sub-titel">Kategori Produk</h5>
-                                <div class="categori-checkbox">
-                                    <form action="" method="get">
-                                        <ul>
-                                            <?php
-                                            $kategoriQuery = mysqli_query($koneksi, "SELECT * FROM tb_kategori");
-                                            while ($kategori = mysqli_fetch_assoc($kategoriQuery)) {
-                                                $checked = (isset($_GET['kategori']) && $_GET['kategori'] == $kategori['id_kategori']) ? 'checked' : '';
-                                                echo '<li>
-                                                    <label>
-                                                        <input type="radio" name="kategori" value="' . $kategori['id_kategori'] . '" ' . $checked . ' onchange="this.form.submit()">
-                                                        ' . $kategori['nm_kategori'] . '
-                                                    </label>
-                                                  </li>';
-                                            }
-                                            ?>
-                                        </ul>
-                                    </form>
-                                </div>
-                            </div>
+                            <p class="form-messege"></p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
+        <!-- Contact Main Page Area End Here -->
+        <!-- Begin Footer Area -->
         <div class="footer">
             <div class="footer-static-top">
                 <div class="container">
@@ -914,5 +759,201 @@ if (isset($_POST['update_cart'])) {
             });
         });
     </script>
+    <script>
+        // When the window has finished loading create our google map below
+        google.maps.event.addDomListener(window, 'load', init);
+
+        function init() {
+            // Basic options for a simple Google Map
+            // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+            var mapOptions = {
+                // How zoomed in you want the map to start at (always required)
+                zoom: 12,
+                scrollwheel: false,
+                // The latitude and longitude to center the map (always required)
+                center: new google.maps.LatLng(40.740610, -73.935242), // New York
+                // How you would like to style the map. 
+                // This is where you would paste any style found on
+                styles: [{
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [{
+                                "color": "#e9e9e9"
+                            },
+                            {
+                                "lightness": 17
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "geometry",
+                        "stylers": [{
+                                "color": "#f5f5f5"
+                            },
+                            {
+                                "lightness": 20
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry.fill",
+                        "stylers": [{
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 17
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry.stroke",
+                        "stylers": [{
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 29
+                            },
+                            {
+                                "weight": 0.2
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "geometry",
+                        "stylers": [{
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 18
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "geometry",
+                        "stylers": [{
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 16
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "geometry",
+                        "stylers": [{
+                                "color": "#f5f5f5"
+                            },
+                            {
+                                "lightness": 21
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "geometry",
+                        "stylers": [{
+                                "color": "#dedede"
+                            },
+                            {
+                                "lightness": 21
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.stroke",
+                        "stylers": [{
+                                "visibility": "on"
+                            },
+                            {
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 16
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.fill",
+                        "stylers": [{
+                                "saturation": 36
+                            },
+                            {
+                                "color": "#333333"
+                            },
+                            {
+                                "lightness": 40
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.icon",
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "geometry",
+                        "stylers": [{
+                                "color": "#f2f2f2"
+                            },
+                            {
+                                "lightness": 19
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative",
+                        "elementType": "geometry.fill",
+                        "stylers": [{
+                                "color": "#fefefe"
+                            },
+                            {
+                                "lightness": 20
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative",
+                        "elementType": "geometry.stroke",
+                        "stylers": [{
+                                "color": "#fefefe"
+                            },
+                            {
+                                "lightness": 17
+                            },
+                            {
+                                "weight": 1.2
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            // Get the HTML DOM element that will contain your map 
+            // We are using a div with id="map" seen below in the <body>
+            var mapElement = document.getElementById('google-map');
+
+            // Create the Google Map using our element and options defined above
+            var map = new google.maps.Map(mapElement, mapOptions);
+
+            // Let's also add a marker while we're at it
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(40.740610, -73.935242),
+                map: map,
+                title: 'Limupa',
+                animation: google.maps.Animation.BOUNCE
+            });
+        }
+    </script>
 </body>
+
+<!-- contact32:04-->
+
 </html>

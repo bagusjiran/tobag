@@ -49,7 +49,7 @@ if (isset($_POST['simpan'])) {
     if (!in_array($extension, $allowed_extension)) {
         echo "<script>alert('Format Gambar Tidak valid. Hanya jpg, jpeg, png, gif, dan webp yang diperbolehkan.')</script>";
     } else {
-        $newfilename = $id_produk . '.' . $extension;
+        $imgnewfile = md5(time() . $imgfile) . "." . $extension;
         move_uploaded_file($tmp, $dir . $newfilename);
 
         $query = mysqli_query($koneksi, "INSERT INTO tb_produk(id_produk, nm_produk, harga, stok, desk, id_kategori, gambar) 

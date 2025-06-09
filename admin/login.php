@@ -117,7 +117,7 @@ if (isset($_POST["login"])) {
               </div>
 
               <div class="credits">
-                Designed by <a href="https://wa.me/6282322238082">Bagus Jiran</a>
+                Designed by <a href="https://wa.me/6282322238082">Smart People</a>
               </div>
 
             </div>

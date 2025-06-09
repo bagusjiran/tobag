@@ -37,7 +37,7 @@ $total_bayar = $subtotal - $diskon;
 // Proses checkout
 if (isset($_POST['checkout'])) {
     if (empty($cart_items)) {
-        echo "<script>alert('Keranjang kosong!'); window.location='cart.php';</script>";
+        echo "<script>alert('Keranjang kosong!'); window.location='belanja.php';</script>";
         exit;
     }
 
@@ -228,9 +228,12 @@ if (isset($_POST['update_cart'])) {
                                                     <a href="cart.php" class="li-button li-button-dark li-button-fullwidth li-button-sm">
                                                         <span>View Full Cart</span>
                                                     </a>
-                                                    <a href="checkout.php" class="li-button li-button-fullwidth li-button-sm">
-                                                        <span>Checkout</span>
-                                                    </a>
+                                                    <form method="POST" action="cart.php">
+                                                        <input type="hidden" name="checkout" value="1">
+                                                        <button type="submit" name="checkout" class="li-button li-button-fullwidth li-button-sm" style="border: none !important;">
+                                                            <span>Chechout</span> 
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </li>
@@ -448,26 +451,16 @@ if (isset($_POST['update_cart'])) {
                                 <div class="footer-block">
                                     <h3 class="footer-block-title">Ikuti Kami</h3>
                                     <ul class="social-link">
-                                        <li class="twitter">
-                                            <a href="https://twitter.com/" data-toggle="tooltip" target="_blank" title="Twitter">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li class="facebook">
-                                            <a href="https://www.facebook.com/" data-toggle="tooltip" target="_blank" title="Facebook">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li class="youtube">
-                                            <a href="https://www.youtube.com/" data-toggle="tooltip" target="_blank" title="Youtube">
-                                                <i class="fa fa-youtube"></i>
-                                            </a>
-                                        </li>
-                                        <li class="instagram">
-                                            <a href="https://www.instagram.com/" data-toggle="tooltip" target="_blank" title="Instagram">
-                                                <i class="fa fa-instagram"></i>
-                                            </a>
-                                        </li>
+                                            <li class="twitter">
+                                                <a href="https://x.com/BagusJiran694" data-toggle="tooltip" target="_blank" title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="youtube">
+                                                <a href="https://www.youtube.com/@bagusjiranriskohar" data-toggle="tooltip" target="_blank" title="Youtube">
+                                                    <i class="fa fa-youtube"></i>
+                                                </a>
+                                            </li>
                                     </ul>
                                 </div>
                             </div>
