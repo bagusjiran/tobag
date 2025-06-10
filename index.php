@@ -231,22 +231,6 @@ if (isset($_POST['update_cart'])) {
                         <!-- Header Logo Area End Here -->
                         <!-- Begin Header Middle Right Area -->
                         <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
-                            <!-- Begin Header Middle Searchbox Area -->
-                            <form action="" method="GET" class="hm-searchbox">
-                                <select name="kategori" class="nice-select select-search-category">
-                                    <option value="">All</option>
-                                    <?php
-                                    include 'admin/koneksi.php';
-                                    $kategoriQuery = mysqli_query($koneksi, "SELECT * FROM tb_kategori ORDER BY nm_kategori ASC");
-                                    while ($kategori = mysqli_fetch_assoc($kategoriQuery)) {
-                                        $selected = (isset($_GET['kategori']) && $_GET['kategori'] == $kategori['id_kategori']) ? 'selected' : '';
-                                        echo "<option value='{$kategori['id_kategori']}' $selected>{$kategori['nm_kategori']}</option>";
-                                    }
-                                    ?>
-                                </select>
-                                <input type="text" name="keyword" placeholder="Enter your search key ..." value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
-                                <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
-                            </form>
                             <div class="header-middle-right">
                                 <ul class="hm-menu">
                                     <?php if (!isset($_SESSION['id_user'])) { ?>
@@ -430,8 +414,8 @@ if (isset($_POST['update_cart'])) {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="static-top-content mt-sm-30">
-                            Promo Spesial Akhir Pekan dari <strong>Technozone</strong> – Gunakan Kode Kupon:
-                            <span>TECHNO15</span>
+                           Selamat berbelanja elektronik di Toko Bagus <strong>ToBag</strong> – Kami akan:
+                            <span>Mewarnai Harimu</span>
                         </div>
                     </div>
                 </div>

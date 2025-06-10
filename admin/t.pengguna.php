@@ -256,7 +256,7 @@ if (isset($_POST['simpan'])) {
             &copy; Copyright <strong><span>ToBag</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="link ig">Bagus Jiran</a>
+            Designed by <a href="link ig">Smart People</a>
         </div>
     </footer><!-- End Footer -->
 
