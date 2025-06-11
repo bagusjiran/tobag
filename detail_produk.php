@@ -1,9 +1,153 @@
+
 <?php
 session_start();
 
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['id_user'])) {
     echo "<script>alert('Silakan login terlebih dahulu untuk melihat detail produk atau menambahkan ke keranjang.'); window.location.href = 'login.php';</script>";
+    exit;
+}
+include 'admin/koneksi.php';
+
+// Tangani pengambilan data keranjang hanya jika pengguna sudah login
+if (isset($_SESSION['id_user'])) {
+    $id_user = mysqli_real_escape_string($koneksi, $_SESSION['id_user']);
+
+    // Ambil data keranjang
+    $query_pesanan = mysqli_query($koneksi, "
+        SELECT p.*, pr.nm_produk, pr.gambar, pr.harga, pr.stok 
+        FROM tb_pesanan p
+        JOIN tb_produk pr ON p.id_produk = pr.id_produk
+        WHERE p.id_user = '$id_user'
+    ");
+
+    // Hitung total untuk mini-cart dan tabel
+    $subtotal = 0;
+    $cart_items = [];
+    $cart_count = 0;
+    while ($row = mysqli_fetch_assoc($query_pesanan)) {
+        $cart_items[] = $row;
+        $subtotal += $row['qty'] * $row['harga'];
+        $cart_count++;
+    }
+    $diskon = 0;
+    if ($subtotal > 3000000) {
+        $diskon = 0.07 * $subtotal;
+    } elseif ($subtotal > 1500000) {
+        $diskon = 0.05 * $subtotal;
+    }
+    $total_bayar = $subtotal - $diskon;
+} else {
+    // Tetapkan nilai default jika pengguna belum login
+    $subtotal = 0;
+    $cart_items = [];
+    $cart_count = 0;
+    $diskon = 0;
+    $total_bayar = 0;
+}
+
+// Proses checkout (tambahkan pemeriksaan login)
+if (isset($_POST['checkout'])) {
+    if (!isset($_SESSION['id_user'])) {
+        echo "<script>alert('Silakan login terlebih dahulu.'); window.location='login.php';</script>";
+        exit;
+    }
+    if (empty($cart_items)) {
+        echo "<script>alert('Keranjang kosong!'); window.location='belanja.php';</script>";
+        exit;
+    }
+
+    // Mulai transaksi
+    mysqli_begin_transaction($koneksi);
+
+    try {
+        // Periksa stok untuk semua item
+        foreach ($cart_items as $item) {
+            if ($item['qty'] > $item['stok']) {
+                throw new Exception("Stok tidak mencukupi untuk produk: {$item['nm_produk']} (Tersedia: {$item['stok']}, Diminta: {$item['qty']})");
+            }
+        }
+
+        // Generate ID penjualan
+        $result = mysqli_query($koneksi, "SELECT MAX(RIGHT(id_jual, 3)) AS max_id FROM tb_jual");
+        $row = mysqli_fetch_assoc($result);
+        $last_id = $row['max_id'];
+        $next_id = 'T' . str_pad((int)$last_id + 1, 3, '0', STR_PAD_LEFT);
+
+        $tgl = date('Y-m-d H:i:s');
+        $query_insert_jual = mysqli_query($koneksi, "INSERT INTO tb_jual (id_jual, id_user, tgl_jual, total, diskon) 
+            VALUES ('$next_id', '$id_user', '$tgl', '$total_bayar', '$diskon')");
+
+        if (!$query_insert_jual) {
+            throw new Exception('Gagal menyimpan data penjualan!');
+        }
+
+        // Simpan detail penjualan dan kurangi stok
+        foreach ($cart_items as $item) {
+            $total = $item['qty'] * $item['harga'];
+            $query_dtl = mysqli_query($koneksi, "INSERT INTO tb_jualdtl (id_jual, id_produk, qty, harga) 
+                VALUES ('$next_id', '{$item['id_produk']}', '{$item['qty']}', '$total')");
+
+            if (!$query_dtl) {
+                throw new Exception('Gagal menyimpan detail penjualan!');
+            }
+
+            // Kurangi stok produk
+            $query_update_stok = mysqli_query($koneksi, "UPDATE tb_produk SET stok = stok - {$item['qty']} WHERE id_produk = '{$item['id_produk']}'");
+            if (!$query_update_stok) {
+                throw new Exception('Gagal memperbarui stok produk!');
+            }
+        }
+
+        // Hapus pesanan dari keranjang
+        $hapus = mysqli_query($koneksi, "DELETE FROM tb_pesanan WHERE id_user = '$id_user'");
+        if (!$hapus) {
+            throw new Exception('Gagal menghapus keranjang!');
+        }
+
+        // Commit transaksi
+        mysqli_commit($koneksi);
+        echo "<script>alert('Checkout berhasil!'); window.location='cart.php';</script>";
+        exit;
+    } catch (Exception $e) {
+        // Rollback transaksi jika terjadi error
+        mysqli_rollback($koneksi);
+        echo "<script>alert('{$e->getMessage()}'); window.location='cart.php';</script>";
+        exit;
+    }
+}
+
+// Proses update cart (tambahkan pemeriksaan login)
+if (isset($_POST['update_cart'])) {
+    if (!isset($_SESSION['id_user'])) {
+        echo "<script>alert('Silakan login terlebih dahulu.'); window.location='login.php';</script>";
+        exit;
+    }
+    foreach ($_POST['qty'] as $id_pesanan => $new_qty) {
+        $id_pesanan = mysqli_real_escape_string($koneksi, $id_pesanan);
+        $new_qty = (int)$new_qty;
+        if ($new_qty < 1) $new_qty = 1;
+
+        // Periksa stok produk
+        $query_check = mysqli_query($koneksi, "
+            SELECT pr.stok 
+            FROM tb_pesanan p
+            JOIN tb_produk pr ON p.id_produk = pr.id_produk
+            WHERE p.id_pesanan = '$id_pesanan' AND p.id_user = '$id_user'
+        ");
+        $row = mysqli_fetch_assoc($query_check);
+        if ($new_qty > $row['stok']) {
+            echo "<script>alert('Stok tidak mencukupi untuk pesanan ini!'); window.location='cart.php';</script>";
+            exit;
+        }
+
+        $query_update = mysqli_query($koneksi, "UPDATE tb_pesanan SET qty = '$new_qty' WHERE id_pesanan = '$id_pesanan' AND id_user = '$id_user'");
+        if (!$query_update) {
+            echo "<script>alert('Gagal memperbarui jumlah pesanan!'); window.location='cart.php';</script>";
+            exit;
+        }
+    }
+    echo "<script>alert('Keranjang berhasil diperbarui!'); window.location='cart.php';</script>";
     exit;
 }
 ?>
@@ -98,51 +242,43 @@ if (!isset($_SESSION['id_user'])) {
                                         </ul>
                                     </li>
                                     <li class="hm-minicart">
-                                        <div class="hm-minicart-trigger">
-                                            <span class="item-icon"></span>
-                                            <span class="item-text">£80.00
-                                                <span class="cart-item Nigel
-                                                <span class="cart-item-count">2</span>
-                                            </span>
-                                        </div>
-                                        <span></span>
-                                        <div class="minicart">
-                                            <ul class="minicart-product-list">
-                                                <li>
-                                                    <a href="single-product.html" class="minicart-product-image">
-                                                        <img src="images/product/small-size/1.jpg" alt="cart products">
-                                                    </a>
-                                                    <div class="minicart-product-details">
-                                                        <h6><a href="single-product.html">Aenean eu tristique</a></h6>
-                                                        <span>£40 x 1</span>
-                                                    </div>
-                                                    <button class="close">
-                                                        <i class="fa fa-close"></i>
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <a href="single-product.html" class="minicart-product-image">
-                                                        <img src="images/product/small-size/2.jpg" alt="cart products">
-                                                    </a>
-                                                    <div class="minicart-product-details">
-                                                        <h6><a href="single-product.html">Aenean eu tristique</a></h6>
-                                                        <span>£40 x 1</span>
-                                                    </div>
-                                                    <button class="close">
-                                                        <i class="fa fa-close"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                            <p class="minicart-total">SUBTOTAL: <span>£80.00</span></p>
-                                            <div class="minicart-button">
-                                                <a href="cart.php" class="li-button li-button-dark li-button-fullwidth li-button-sm">
-                                                    <span>View Full Cart</span>
-                                                </a>
-                                                <a href="checkout.html" class="li-button li-button-fullwidth li-button-sm">
-                                                    <span>Checkout</span>
-                                                </a>
+                                            <div class="hm-minicart-trigger">
+                                                <span class="item-icon"></span>
+                                                <span class="item-text">Rp <?= number_format($subtotal, 0, ',', '.') ?>
+                                                    <span class="cart-item-count"><?= $cart_count ?></span>
+                                                </span>
                                             </div>
-                                        </div>
+                                            <span></span>
+                                            <div class="minicart">
+                                                <ul class="minicart-product-list">
+                                                    <?php foreach ($cart_items as $item) { ?>
+                                                        <li>
+                                                            <a href="detail_produk.php?id=<?= $item['id_produk'] ?>" class="minicart-product-image">
+                                                                <img src="admin/produk_img/<?= $item['gambar'] ?>" alt="<?= htmlspecialchars($item['nm_produk']) ?>">
+                                                            </a>
+                                                            <div class="minicart-product-details">
+                                                                <h6><a href="detail_produk.php?id=<?= $item['id_produk'] ?>"><?= htmlspecialchars($item['nm_produk']) ?></a></h6>
+                                                                <span>Rp <?= number_format($item['harga'] * $item['qty'], 0, ',', '.') ?> x <?= $item['qty'] ?></span>
+                                                            </div>
+                                                            <button class="close delete-item" data-id="<?= $item['id_pesanan'] ?>">
+                                                                <i class="fa fa-close"></i>
+                                                            </button>
+                                                        </li>
+                                                    <?php } ?>
+                                                </ul>
+                                                <p class="minicart-total">SUBTOTAL: <span>Rp <?= number_format($subtotal, 0, ',', '.') ?></span></p>
+                                                <div class="minicart-button">
+                                                    <a href="cart.php" class="li-button li-button-dark li-button-fullwidth li-button-sm">
+                                                        <span>View Full Cart</span>
+                                                    </a>
+                                                    <form method="POST" action="cart.php">
+                                                        <input type="hidden" name="checkout" value="1">
+                                                        <button type="submit" name="checkout" class="li-button li-button-fullwidth li-button-sm" style="border: none !important;">
+                                                            <span>Chechout</span> 
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                     </li>
                                 </ul>
                             </div>

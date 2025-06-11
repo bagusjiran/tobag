@@ -197,46 +197,7 @@ if (isset($_POST['update_cart'])) {
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </li>
-                                        <li class="hm-minicart">
-                                            <div class="hm-minicart-trigger">
-                                                <span class="item-icon"></span>
-                                                <span class="item-text">Rp <?= number_format($subtotal, 0, ',', '.') ?>
-                                                    <span class="cart-item-count"><?= $cart_count ?></span>
-                                                </span>
-                                            </div>
-                                            <span></span>
-                                            <div class="minicart">
-                                                <ul class="minicart-product-list">
-                                                    <?php foreach ($cart_items as $item) { ?>
-                                                        <li>
-                                                            <a href="detail_produk.php?id=<?= $item['id_produk'] ?>" class="minicart-product-image">
-                                                                <img src="admin/produk_img/<?= $item['gambar'] ?>" alt="<?= htmlspecialchars($item['nm_produk']) ?>">
-                                                            </a>
-                                                            <div class="minicart-product-details">
-                                                                <h6><a href="detail_produk.php?id=<?= $item['id_produk'] ?>"><?= htmlspecialchars($item['nm_produk']) ?></a></h6>
-                                                                <span>Rp <?= number_format($item['harga'] * $item['qty'], 0, ',', '.') ?> x <?= $item['qty'] ?></span>
-                                                            </div>
-                                                            <button class="close delete-item" data-id="<?= $item['id_pesanan'] ?>">
-                                                                <i class="fa fa-close"></i>
-                                                            </button>
-                                                        </li>
-                                                    <?php } ?>
-                                                </ul>
-                                                <p class="minicart-total">SUBTOTAL: <span>Rp <?= number_format($subtotal, 0, ',', '.') ?></span></p>
-                                                <div class="minicart-button">
-                                                    <a href="cart.php" class="li-button li-button-dark li-button-fullwidth li-button-sm">
-                                                        <span>View Full Cart</span>
-                                                    </a>
-                                                    <form method="POST" action="cart.php">
-                                                        <input type="hidden" name="checkout" value="1">
-                                                        <button type="submit" name="checkout" class="li-button li-button-fullwidth li-button-sm" style="border: none !important;">
-                                                            <span>Chechout</span> 
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        </li>                                       
                                     <?php } ?>
                                 </ul>
                             </div>

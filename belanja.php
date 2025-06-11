@@ -245,7 +245,7 @@ if (isset($_POST['update_cart'])) {
                                                 <i class="fa fa-user-circle-o"></i>
                                             </a>
                                         </li>
-                                    <?php } else { ?>
+                                            <?php } else { ?>
                                         <li class="hm-wishlist dropdown">
                                             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-user-circle-o"></i>

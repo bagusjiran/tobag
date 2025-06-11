@@ -222,21 +222,6 @@ if (isset($_POST['update_cart'])) {
                             </div>
                         </div>
                         <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
-                            <form action="" method="GET" class="hm-searchbox">
-                                <select name="kategori" class="nice-select select-search-category">
-                                    <option value="">All</option>
-                                    <?php
-                                    include 'admin/koneksi.php';
-                                    $kategoriQuery = mysqli_query($koneksi, "SELECT * FROM tb_kategori ORDER BY nm_kategori ASC");
-                                    while ($kategori = mysqli_fetch_assoc($kategoriQuery)) {
-                                        $selected = (isset($_GET['kategori']) && $_GET['kategori'] == $kategori['id_kategori']) ? 'selected' : '';
-                                        echo "<option value='{$kategori['id_kategori']}' $selected>{$kategori['nm_kategori']}</option>";
-                                    }
-                                    ?>
-                                </select>
-                                <input type="text" name="keyword" placeholder="Enter your search key ..." value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
-                                <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
-                            </form>
                             <div class="header-middle-right">
                                 <ul class="hm-menu">
                                     <?php if (!isset($_SESSION['id_user'])) { ?>
@@ -358,7 +343,7 @@ if (isset($_POST['update_cart'])) {
         <div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
             <div class="container mb-60">
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.973730217066!2d111.58744367424643!3d-7.129035169917676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e776411abeabb93%3A0x3ccba806cf9ef497!2sSekolah%20Tinggi%20Teknologi%20Ronggolawe!5e0!3m2!1sen!2sid!4v1746959940264!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d494.8866095181151!2d111.57035594401172!3d-7.115235136321478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e776522e1932385%3A0x563fa6216cb48745!2sSINGGAH%20MATA%20MOTOR%20S2M!5e0!3m2!1sen!2sid!4v1749610049597!5m2!1sen!2sid" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
 
@@ -366,21 +351,21 @@ if (isset($_POST['update_cart'])) {
                 <div class="row">
                     <div class="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
                         <div class="contact-page-side-content">
-                            <h3 class="contact-page-title">Technozone</h3>
+                            <h3 class="contact-page-title">ToBag</h3>
                             <p class="contact-page-message mb-25">
-                                Technozone adalah toko online yang menyediakan berbagai produk elektronik berkualitas seperti smartphone, tablet, laptop, dan aksesori lainnya dengan harga terbaik.
+                            ToBag kepercayaan anda menyediakan peralatan elektronik masa kini.
                             </p>
                             <div class="single-contact-block">
                                 <h4><i class="fa fa-map-marker"></i> Alamat</h4>
-                                <p>Jl. Teknologi No. 88, Jakarta Selatan, DKI Jakarta 12345, Indonesia</p>
+                                <p>Jln. Pemuda KM.05 Cepu-Blora, Jawa Tengah, Indonesia</p>
                             </div>
                             <div class="single-contact-block">
                                 <h4><i class="fa fa-phone"></i> Telepon</h4>
-                                <p><a href="tel:+6281234567890">(+62) 812 3456 7890</a></p>
+                                <p><a href="tel:+6281234567890">(+62) 823 2223 8082</a></p>
                             </div>
                             <div class="single-contact-block last-child">
                                 <h4><i class="fa fa-envelope-o"></i> Email</h4>
-                                <p><a href="mailto:info@technozone.id">info@technozone.id</a></p>
+                                <p><a href="mailto:info@ToBag.co.id">info@ToBag.co.id</a></p>
                             </div>
                         </div>
                     </div>
